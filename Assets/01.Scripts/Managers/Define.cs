@@ -7,19 +7,20 @@ public class Define
 {
     #region constant
     
-    public const int MAX_CHARACTERS_COUNT = 20;
-    public const int LEVEL_UP_THRESHOLD = 4000;
-    public const int MAX_LEVEL = 4;
-    public const int FEVER_THRESHOLD = 10;
-    public const int SUPER_FEVER_THRESHOLD = 25;
+    public const int StartCoinAmount = 100;
+    public const int StartSpawnCost = 20;
+    public const int SpawnCostIncrease = 2;
     
-    public const float SPECIAL_PROBABILITY = 0.02f;
-    public const float GAME_INITIAL_TIME = 60f;
-    public const float FEVER_DURATION = 3f;
     public const float DEFAULT_BGM_VOLUME = 0.4f;
     public const float DEFAULT_SFX_VOLUME = 0.5f;
 
     public static readonly float[] BGM_PITCH = new float[] { 1.0f, 1.1f, 1.2f };
+    public static readonly Dictionary<UnitGrade, float> DefaultSpawnRateDict = new Dictionary<UnitGrade, float>()
+    {
+        {UnitGrade.Normal, 97.47f},
+        {UnitGrade.Rare, 1.95f},
+        {UnitGrade.Hero, 0.58f},
+    };
     
     #endregion
 
@@ -31,51 +32,40 @@ public class Define
         Loading,
         Score
     }
-
-    public enum CharacterClass
-    {
-        None = -1,
-        Normal,
-        Special
-    }
-
-    public enum Character
-    {
-        None = -1,
-        Bear,
-        Chick,
-        Chicken,
-        Cow,
-        Duck,
-        Giraffe,
-        Hippo,
-        Narwhal,
-        Panda,
-        Parrot,
-        Penguin,
-        Pig,
-        Snake,
-        Whale,
-        Zebra,
-        Bomb = 100
-    }
-
-    public enum InputType
-    {
-        Left,
-        Right
-    }
+    
     public enum GameState
     {
-        None = 0,
-        Running = 1,
-        GameOver = 2
+        None,
+        Running,
+        GameOver
     }
-    public enum FeverState
+    public enum UnitGrade
     {
-        Normal = 1,
-        Fever = 2,
-        SuperFever = 4
+        Normal,
+        Rare,
+        Hero,
+        Mythical
+    }
+    public enum EnemyGrade
+    {
+        Normal,
+        Boss
+    }
+    public enum PlayerType
+    {
+        LocalPlayer,
+        AiPlayer
+    }
+    public enum EnemyState
+    {
+        None = -1,
+        Move,
+        Dead
+    }
+    public enum DamageType
+    {
+        Physical,
+        Magical
     }
     public enum Sfx
     {

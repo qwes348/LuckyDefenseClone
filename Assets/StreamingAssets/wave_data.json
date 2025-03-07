@@ -1,0 +1,18 @@
+{
+    "enemyTemplates": {
+      "Slime": {
+        "name": "Slime",
+        "spawnInterval": 1        
+      }
+    },
+    "waves": [
+      {
+        "__comment": "waveRange 0번~1번 까지 같은 설정으로 진행",
+        "waveRange": [1, 4],
+        "nextWaveTime": 20,
+        "enemies": [
+          { "template": "Slime", "count": 40 }
+        ]
+      }
+    ]
+  }

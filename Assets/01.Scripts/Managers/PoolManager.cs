@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
 
 [Serializable]
@@ -126,6 +127,54 @@ public class PoolManager
     {
         // 풀에 존재한다면 찾음
         Poolable returnObj = null;
+        if (poolDictionary.ContainsKey(id))
+        {
+            while (poolDictionary[id].Count > 0 && returnObj == null)
+            {
+                returnObj = poolDictionary[id].Pop();
+                if (returnObj.isUsing)
+                {
+                    returnObj = null;
+                    continue;
+                }
+
+                returnObj.isUsing = true;
+                returnObj.onPop?.Invoke();
+            }
+
+            if (returnObj != null)
+            {
+                currentActivePoolables.Add(returnObj);
+                return returnObj;
+            }
+        }
+        else
+        {
+            // 풀에 없다면 풀을 만듦
+            poolDictionary.Add(id, new Stack<Poolable>());
+        }
+        
+        // 새로생성해서 반환해줌
+        returnObj = await Managers.Resource.InstantiateAsset<Poolable>(id);
+        returnObj.gameObject.SetActive(false);
+        returnObj.isUsing = true;
+        if (returnObj.isAutoPooling)
+            returnObj.ResetAutoPoolingTimer();
+        returnObj.onPop?.Invoke();
+
+        currentActivePoolables.Add(returnObj);
+        return returnObj;
+    }
+    
+    /// <summary>
+    /// 어드레서블에서 Pop
+    /// </summary>
+    /// <param name="id">어드레서블 id</param>
+    public async UniTask<Poolable> PopAsync(AssetReferenceGameObject addressableObject)
+    {
+        // 풀에 존재한다면 찾음
+        Poolable returnObj = null;
+        string id = addressableObject.AssetGUID;
         if (poolDictionary.ContainsKey(id))
         {
             while (poolDictionary[id].Count > 0 && returnObj == null)

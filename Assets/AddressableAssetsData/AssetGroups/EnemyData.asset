@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: EnemyData
+  m_EditorClassIdentifier: 
+  m_GroupName: EnemyData
+  m_GUID: 465e61bd70c96034c8a19d7f271577db
+  m_SerializeEntries:
+  - m_GUID: 521b6ee08fc457041b4504ca0a235540
+    m_Address: Assets/04.Data/EnemyData/EnemyData-Slime.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemyData
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f0945f7ac8a5b32448fc1dddd5fbcb3a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 312a83decfee97a4baa8568c425a5d9e, type: 2}
+    - {fileID: 11400000, guid: 15d31d6cf0c12b64387db2226c4b30dc, type: 2}
