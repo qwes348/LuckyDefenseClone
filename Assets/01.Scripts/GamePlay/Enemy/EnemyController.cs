@@ -78,7 +78,7 @@ public class EnemyController : MonoBehaviour
     
     public void GetDamage(float damage, Define.DamageType damageType)
     {
-        if (currentState == Define.EnemyState.Died)
+        if (currentState != Define.EnemyState.Move)
             return;
         
         // TODO: 체력바에 반영

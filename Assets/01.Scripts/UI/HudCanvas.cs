@@ -39,6 +39,7 @@ public class HudCanvas : MonoBehaviour
         UpdateCoinAmountText(InGameManagers.CurrencyMgr.CoinAmount);
         UpdatechipAmountText(InGameManagers.CurrencyMgr.ChipAmount);
         UpdateUnitCountText(0);
+        UpdateEnemiesCount(0);
         InGameManagers.WaveMgr.onWaveNumberChange += UpdateWaveNumberText;
         InGameManagers.WaveMgr.onWaveTimerTick += UpdateTimerText;
         InGameManagers.WaveMgr.onEnemiesCountChange += UpdateEnemiesCount;

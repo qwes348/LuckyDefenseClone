@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(CircleCollider2D))]
 public class UnitController : MonoBehaviour
 {
     [SerializeField]
@@ -8,6 +9,8 @@ public class UnitController : MonoBehaviour
     private Collider2D[] overlapColliders;
     private float attackTimer;
     private Animator anim;
+    private GridSystem.Cell myCell;
+    private bool isSelected;
     
     #region AnimParam
 
@@ -16,6 +19,7 @@ public class UnitController : MonoBehaviour
     
     #region Properties
     public UnitData MyUnitData => myUnitData;
+    public GridSystem.Cell MyCell { get; set; }
     #endregion
 
     public void Init(UnitData data)
@@ -75,6 +79,16 @@ public class UnitController : MonoBehaviour
     private void CheckAttackRange()
     {
         Physics2D.OverlapCircleNonAlloc(transform.position, myUnitData.AttackRagne, overlapColliders, LayerMask.GetMask("Enemy"));
+    }
+
+    public void SelectUnit()
+    {
+        
+    }
+
+    public void DeselectUnit()
+    {
+        
     }
 
     private void OnDrawGizmosSelected()
