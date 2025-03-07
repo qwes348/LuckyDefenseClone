@@ -84,7 +84,6 @@ public class GridSystem : MonoBehaviour
         }
         
         targetCell.AddUnit(unit);
-        // unit.transform.position = (Vector3)(CellSize * targetCell.Coord) + transform.position;
         unit.gameObject.SetActive(true);
     }
 

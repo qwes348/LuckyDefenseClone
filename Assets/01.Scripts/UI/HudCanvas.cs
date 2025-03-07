@@ -15,6 +15,12 @@ public class HudCanvas : MonoBehaviour
     private TextMeshProUGUI enemiesCountText;
     [SerializeField]
     private TextMeshProUGUI spawnCostText;
+    [SerializeField]
+    private TextMeshProUGUI coinAmountText;
+    [SerializeField]
+    private TextMeshProUGUI chipAmountText;
+    [SerializeField]
+    private TextMeshProUGUI unitCountText;
     
     [Header("Images")]
     [SerializeField]
@@ -30,10 +36,16 @@ public class HudCanvas : MonoBehaviour
         
         UpdateWaveNumberText(1);
         UpdateSpawnCostText(Define.StartSpawnCost);
+        UpdateCoinAmountText(InGameManagers.CurrencyMgr.CoinAmount);
+        UpdatechipAmountText(InGameManagers.CurrencyMgr.ChipAmount);
+        UpdateUnitCountText(0);
         InGameManagers.WaveMgr.onWaveNumberChange += UpdateWaveNumberText;
         InGameManagers.WaveMgr.onWaveTimerTick += UpdateTimerText;
         InGameManagers.WaveMgr.onEnemiesCountChange += UpdateEnemiesCount;
         InGameManagers.UnitSpawnMgr.onSpawnCostChanged += UpdateSpawnCostText;
+        InGameManagers.CurrencyMgr.onCoinAmountChanged += UpdateCoinAmountText;
+        InGameManagers.CurrencyMgr.onChipAmountChanged += UpdateCoinAmountText;
+        InGameManagers.UnitSpawnMgr.onLocalPlayerUnitCountChanged += UpdateUnitCountText;
     }
 
     private void UpdateWaveNumberText(int waveNumber)
@@ -59,5 +71,20 @@ public class HudCanvas : MonoBehaviour
     {
         spawnCostText.text = $"{cost}";
         spawnCostText.color = InGameManagers.CurrencyMgr.CoinAmount >= cost ? Color.white : Color.red;
+    }
+
+    private void UpdateCoinAmountText(int amount)
+    {
+        coinAmountText.text = $"{amount}";
+    }
+
+    private void UpdatechipAmountText(int amount)
+    {
+        chipAmountText.text = $"{amount}";
+    }
+
+    private void UpdateUnitCountText(int amount)
+    {
+        unitCountText.text = $"{amount}/{Define.MaxUnitCount}";
     }
 }

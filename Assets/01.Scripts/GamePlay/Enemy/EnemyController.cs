@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
 using EditorAttributes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class EnemyController : MonoBehaviour
 {
     [Header("런타임에 채워지는 데이터들")]
@@ -17,10 +19,18 @@ public class EnemyController : MonoBehaviour
     
     private IReadOnlyList<Vector3> waypoints;
     private Define.PlayerType myPlayerType;
+    private Animator anim;
+    
+    #region AnimParam
+    private readonly int animParamMoveX = Animator.StringToHash("MoveX");
+    private readonly int animParamMoveY = Animator.StringToHash("MoveY");
+    private readonly int animStateDeath = Animator.StringToHash("Death");
+    #endregion
 
     #region Properties
 
     public EnemyData MyEnemyData => myEnemyData;
+    public Define.EnemyState CurrentState => currentState;
 
     #endregion
     
@@ -36,11 +46,14 @@ public class EnemyController : MonoBehaviour
             InGameManagers.FieldMgr.enemyWaypointsContainer.OpponentSideWaypoints;
         
         currentState = Define.EnemyState.Move;
+        if(anim == null)
+            anim = GetComponentInChildren<Animator>();
+        GetComponent<Collider2D>().enabled = true;
     }
 
     private void Update()
     {
-        if (myEnemyData == null)
+        if (myEnemyData == null || CurrentState != Define.EnemyState.Move)
             return;
         MoveAlongPath();
     }
@@ -50,6 +63,9 @@ public class EnemyController : MonoBehaviour
         if (waypoints == null)
             return;
         Vector3 targetPos = waypoints[currentWaypointIndex];
+        Vector2 direction = (targetPos - transform.position).normalized;
+        anim.SetFloat(animParamMoveX, direction.x);
+        anim.SetFloat(animParamMoveY, direction.y);
         transform.position = Vector2.MoveTowards(transform.position, targetPos, myEnemyData.MoveSpeed * Time.deltaTime);
 
         if (Vector2.Distance(transform.position, targetPos) < 0.1f)
@@ -59,9 +75,12 @@ public class EnemyController : MonoBehaviour
                 currentWaypointIndex = 0;
         }
     }
-
+    
     public void GetDamage(float damage, Define.DamageType damageType)
     {
+        if (currentState == Define.EnemyState.Died)
+            return;
+        
         // TODO: 체력바에 반영
         float finalDamage = 0f;
         switch (damageType)
@@ -79,8 +98,17 @@ public class EnemyController : MonoBehaviour
         if (currentHelth <= 0)
         {
             // TODO: 쥬금 애니메이션 실행
-            currentState = Define.EnemyState.Dead;
-            InGameManagers.WaveMgr.OnEnemyDie(this);
+            OnDied().Forget();
         }
+    }
+
+    private async UniTaskVoid OnDied()
+    {
+        currentState = Define.EnemyState.Died;
+        GetComponent<Collider2D>().enabled = false;
+        anim.Play(animStateDeath);
+        var animLength = anim.GetCurrentAnimatorStateInfo(0).length;
+        await UniTask.Delay(TimeSpan.FromSeconds(animLength));
+        InGameManagers.WaveMgr.OnEnemyDie(this);
     }
 }

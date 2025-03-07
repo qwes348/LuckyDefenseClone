@@ -12,16 +12,24 @@ public class UnitSpawnManager
     private int currentSpawnCost;
     [SerializeField]
     private List<UnitData> allUnitDatasPool;
+
+    private Dictionary<Define.PlayerType, int> currentUnitsCountDict;
     
     #region Actions
 
     public Action<int> onSpawnCostChanged;
+    public Action<int> onLocalPlayerUnitCountChanged;
     #endregion
 
     public async UniTask Init()
     {
         allUnitDatasPool = await Managers.Resource.LoadAssetsByLabel<UnitData>("unitData");
         currentSpawnCost = Define.StartSpawnCost;
+        currentUnitsCountDict = new Dictionary<Define.PlayerType, int>()
+        {
+            {Define.PlayerType.LocalPlayer, 0},
+            {Define.PlayerType.AiPlayer, 0}
+        };
     }
     
     public async UniTask SpawnRandomUnit(Define.PlayerType playerType)
@@ -29,6 +37,9 @@ public class UnitSpawnManager
         if (InGameManagers.CurrencyMgr.CoinAmount < currentSpawnCost)
             return;
         InGameManagers.CurrencyMgr.CoinAmount -= currentSpawnCost;
+        currentUnitsCountDict[playerType]++;
+        if(playerType == Define.PlayerType.LocalPlayer)
+            onLocalPlayerUnitCountChanged?.Invoke(currentUnitsCountDict[playerType]);
         
         // TODO: AI측의 뽑기도 구현
         // TODO: 히어로 등급 뽑으면 UI에 축하메세지 출력

@@ -1,8 +1,4 @@
-using EditorAttributes;
-using System;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class UnitController : MonoBehaviour
 {
@@ -11,6 +7,12 @@ public class UnitController : MonoBehaviour
     
     private Collider2D[] overlapColliders;
     private float attackTimer;
+    private Animator anim;
+    
+    #region AnimParam
+
+    private readonly int animParamAttack = Animator.StringToHash("Attack");
+    #endregion
     
     #region Properties
     public UnitData MyUnitData => myUnitData;
@@ -21,6 +23,8 @@ public class UnitController : MonoBehaviour
         myUnitData = data;
         attackTimer = data.AttackSpeed;
         overlapColliders = new Collider2D[10];
+        if(anim == null)
+            anim = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -50,13 +54,18 @@ public class UnitController : MonoBehaviour
             {
                 continue;
             }
+            var enemy = coll.GetComponent<EnemyController>();
+            if (enemy == null || enemy.CurrentState == Define.EnemyState.Died) // 이미 죽은 enemy인 경우
+                continue;
+            
             nearestDistance = distance;
-            nearestEnemy = coll.GetComponent<EnemyController>();
+            nearestEnemy = enemy;
         }
         
         if (nearestEnemy == null)
             return;
         
+        anim.SetTrigger(animParamAttack);
         nearestEnemy.GetDamage(myUnitData.AttackPower, Define.DamageType.Physical);
         attackTimer = myUnitData.AttackSpeed;
         

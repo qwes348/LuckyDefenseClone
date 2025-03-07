@@ -10,6 +10,7 @@ public class Define
     public const int StartCoinAmount = 100;
     public const int StartSpawnCost = 20;
     public const int SpawnCostIncrease = 2;
+    public const int MaxUnitCount = 20;
     
     public const float DEFAULT_BGM_VOLUME = 0.4f;
     public const float DEFAULT_SFX_VOLUME = 0.5f;
@@ -60,7 +61,7 @@ public class Define
     {
         None = -1,
         Move,
-        Dead
+        Died
     }
     public enum DamageType
     {
