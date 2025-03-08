@@ -15,8 +15,9 @@ MonoBehaviour:
   grade: 0
   unitName: Slime
   moveSpeed: 0.5
-  maxHealth: 30
-  defensePower: 5
+  maxHealth: 10
+  defensePower: 1
+  prize: 1
   enemyPrefab:
     m_AssetGUID: f1158dcbddb78d34096b13e04922c007
     m_SubObjectName: 

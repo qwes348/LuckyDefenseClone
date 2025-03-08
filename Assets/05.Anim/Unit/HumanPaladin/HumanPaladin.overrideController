@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HumanPaladin
+  m_Controller: {fileID: 9100000, guid: 3cb1415d253da8348a2fa7dc2299d314, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 695425de9fbf0ed4ba5ff2592c1615dd, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: bc82f33306d1a5e4e8b50a889a7a5808, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: be0c345905d63fb4baf402743e2ecaa6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 30ad9f37a46070d4db017a7cbb9d759a, type: 2}

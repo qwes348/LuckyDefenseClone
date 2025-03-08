@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c859493a6c3115439c9ac4cec67035c, type: 3}
-  m_Name: UnitData-OrcWorrior
+  m_Name: UnitData-Mythical-HammerKing
   m_EditorClassIdentifier: 
-  grade: 0
-  unitName: "\uC624\uD06C \uC804\uC0AC"
-  attackPower: 5
-  attackSpeed: 1
+  grade: 3
+  unitName: "\uD574\uBA38 \uD0B9"
+  attackPower: 30
+  attackSpeed: 0.4
   attackRange: 1
   unitPrefab:
     m_AssetGUID: 3317278ccc0602b4a95c1eea301eace8
@@ -23,3 +23,4 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  animator: {fileID: 22100000, guid: 912784227817e1245b1a02d4c8c86847, type: 2}

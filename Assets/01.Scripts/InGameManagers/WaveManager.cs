@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -22,10 +23,11 @@ public class WaveManager
     public Action<int> onWaveTimerTick;
     public Action<int> onWaveNumberChange;
     public Action<int> onEnemiesCountChange;
+    public Action<EnemyController> onEnemySpawned;
 
     public async UniTask Init()
     {
-        currentWaveNumber = 0;
+        currentWaveNumber = 1;
         currentSpawnedEnemies = new List<EnemyController>();
         allEnemyDatasPool = await Managers.Resource.LoadAssetsByLabel<EnemyData>("enemyData");
         LoadWaveData();
@@ -57,11 +59,28 @@ public class WaveManager
         }
 
         SpawnNextWave();
+        currentWaveNumber++;
+        onWaveNumberChange?.Invoke(currentWaveNumber);
+        
+        // 스폰이 다되길 기다리지않고 바로 다음 웨이브 타이머 시작
+        var nextWave = FindWave(currentWaveNumber);
+        if (nextWave != null)
+            StartWaveTimer(nextWave.nextWaveTime);
+    }
+
+    private Wave FindWave(int waveNumber)
+    {
+        foreach (var wv in waveData.waves)
+        {
+            if (wv.waveRange[0] <= waveNumber && wv.waveRange[1] >= waveNumber)
+                return wv;
+        }
+        return null;
     }
 
     private async UniTask SpawnNextWave()
     {
-        Wave wave = waveData.waves[currentWaveNumber];
+        Wave wave = FindWave(currentWaveNumber);
         for (int i = 0; i < wave.enemies.Length; i++)   // 지금은 없지만 한 웨이브에 여러 종류의 몬스터가 나올 경우를 위한 for문
         {
             var data = allEnemyDatasPool.Find(ed => ed.UnitName == wave.enemies[i].template);
@@ -73,9 +92,6 @@ public class WaveManager
                 await UniTask.Delay(TimeSpan.FromSeconds(template.spawnInterval));
             }            
         }
-
-        currentWaveNumber++;
-        onWaveNumberChange?.Invoke(currentWaveNumber);
     }
 
     private async UniTask SpawnEnemy(EnemyData data, Define.PlayerType playerType)
@@ -88,10 +104,12 @@ public class WaveManager
         enemy.gameObject.SetActive(true);
         currentSpawnedEnemies.Add(enemy);
         onEnemiesCountChange?.Invoke(currentSpawnedEnemies.Count);
+        onEnemySpawned?.Invoke(enemy);
     }
 
     public void OnEnemyDie(EnemyController enemy)
     {
+        InGameManagers.CurrencyMgr.CoinAmount += enemy.MyEnemyData.Prize;
         currentSpawnedEnemies.Remove(enemy);
         onEnemiesCountChange?.Invoke(currentSpawnedEnemies.Count);
         Managers.Pool.Push(enemy.GetComponent<Poolable>());

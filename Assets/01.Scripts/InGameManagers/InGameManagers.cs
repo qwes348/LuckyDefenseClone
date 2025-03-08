@@ -33,6 +33,10 @@ public class InGameManagers : MonoBehaviour
     [SerializeField]
     private CurrencyManager currencyMgr = new CurrencyManager();
     public static CurrencyManager CurrencyMgr => Instance.currencyMgr;
+    
+    [SerializeField]
+    private UpgradeManager upgradeMgr = new UpgradeManager();
+    public static UpgradeManager UpgradeMgr => Instance.upgradeMgr;
     #endregion
     
     private void Start()
@@ -56,6 +60,7 @@ public class InGameManagers : MonoBehaviour
             }
             
             instance.currencyMgr.Init();
+            instance.upgradeMgr.Init();
             await instance.unitSpawnMgr.Init();
             await instance.waveMgr.Init();
             

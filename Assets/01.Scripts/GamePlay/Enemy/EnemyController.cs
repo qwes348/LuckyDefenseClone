@@ -27,6 +27,13 @@ public class EnemyController : MonoBehaviour
     private readonly int animStateDeath = Animator.StringToHash("Death");
     #endregion
 
+    #region Actions
+
+    public Action<float> onHealthChanged;
+    public Action onDied;
+
+  #endregion
+
     #region Properties
 
     public EnemyData MyEnemyData => myEnemyData;
@@ -94,6 +101,7 @@ public class EnemyController : MonoBehaviour
         }
 
         currentHelth -= finalDamage;
+        onHealthChanged?.Invoke(currentHelth);
 
         if (currentHelth <= 0)
         {
@@ -109,6 +117,14 @@ public class EnemyController : MonoBehaviour
         anim.Play(animStateDeath);
         var animLength = anim.GetCurrentAnimatorStateInfo(0).length;
         await UniTask.Delay(TimeSpan.FromSeconds(animLength));
+        onDied?.Invoke();
+        Clear();
         InGameManagers.WaveMgr.OnEnemyDie(this);
+    }
+
+    private void Clear()
+    {
+        onDied = null;
+        onHealthChanged = null;
     }
 }

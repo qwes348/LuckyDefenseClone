@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
@@ -5,6 +7,8 @@ public class UnitController : MonoBehaviour
 {
     [SerializeField]
     private UnitData myUnitData;
+    [SerializeField]
+    private SpriteRenderer foothold;
     
     private Collider2D[] overlapColliders;
     private float attackTimer;
@@ -15,20 +19,28 @@ public class UnitController : MonoBehaviour
     #region AnimParam
 
     private readonly int animParamAttack = Animator.StringToHash("Attack");
+    private readonly int animParamAttackSpeed = Animator.StringToHash("AttackSpeed");
     #endregion
     
     #region Properties
     public UnitData MyUnitData => myUnitData;
-    public GridSystem.Cell MyCell { get; set; }
+    public GridSystem.Cell MyCell { get => myCell; set => myCell = value; }
     #endregion
 
-    public void Init(UnitData data)
+    public async UniTask Init(UnitData data)
     {
         myUnitData = data;
         attackTimer = data.AttackSpeed;
         overlapColliders = new Collider2D[10];
         if(anim == null)
             anim = GetComponentInChildren<Animator>();
+        anim.runtimeAnimatorController = data.Animator;
+        // Debug.LogErrorFormat("data: {0}, anim: {1}", data.AttackSpeed, anim.GetFloat("AttackSpeed"));
+        gameObject.name = data.UnitName;
+        foothold.color = Define.UnitFoodholdColorDict[myUnitData.Grade];
+
+        await UniTask.Yield();
+        anim.SetFloat(animParamAttackSpeed, 1f / data.AttackSpeed);
     }
 
     private void Update()
@@ -70,25 +82,14 @@ public class UnitController : MonoBehaviour
             return;
         
         anim.SetTrigger(animParamAttack);
-        nearestEnemy.GetDamage(myUnitData.AttackPower, Define.DamageType.Physical);
+
+        nearestEnemy.GetDamage(CalculateUpgradeDamage(), Define.DamageType.Physical);
         attackTimer = myUnitData.AttackSpeed;
-        
-        Debug.LogFormat("{0}에게 {1}가 공격!", nearestEnemy.name, transform.name);
     }
 
     private void CheckAttackRange()
     {
         Physics2D.OverlapCircleNonAlloc(transform.position, myUnitData.AttackRagne, overlapColliders, LayerMask.GetMask("Enemy"));
-    }
-
-    public void SelectUnit()
-    {
-        
-    }
-
-    public void DeselectUnit()
-    {
-        
     }
 
     private void OnDrawGizmosSelected()
@@ -98,5 +99,28 @@ public class UnitController : MonoBehaviour
         
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, myUnitData.AttackRagne);
+    }
+
+    /// <summary>
+    /// 강화 레벨에따른 공격력을 구함
+    /// </summary>
+    private float CalculateUpgradeDamage()
+    {
+        int upgradeLevel = 0;
+        switch (myUnitData.Grade)
+        {
+            case Define.UnitGrade.Normal:
+            case Define.UnitGrade.Rare:
+                upgradeLevel = InGameManagers.UpgradeMgr.GetUpgradeLevel(Define.UpgradeType.NormalRare, myCell.PlayerType);
+                break;
+            case Define.UnitGrade.Hero:
+                upgradeLevel = InGameManagers.UpgradeMgr.GetUpgradeLevel(Define.UpgradeType.Hero, myCell.PlayerType);
+                break;
+            case Define.UnitGrade.Mythical:
+                upgradeLevel = InGameManagers.UpgradeMgr.GetUpgradeLevel(Define.UpgradeType.Mythical, myCell.PlayerType);
+                break;
+        }
+        
+        return myUnitData.AttackPower + (myUnitData.AttackPower * 0.5f * upgradeLevel);
     }
 }

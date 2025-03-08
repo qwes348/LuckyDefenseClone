@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(GridSystem))]
 public class GridGraphicController : MonoBehaviour
 {
-    // TODO: 공격범위 그래픽 & 모든 셀 반투명 그래픽
+    // TODO: 모든 셀 반투명 그래픽
     [SerializeField]
     private SpriteRenderer pointerDownSprite;   // 클릭을 시작한 셀을 표시해줄 스프라이트
     [SerializeField]
@@ -20,6 +20,15 @@ public class GridGraphicController : MonoBehaviour
         pointerDownSprite.gameObject.SetActive(false);
         draggingSprite.gameObject.SetActive(false);
         SetActiveAttackRange(false);
+    }
+
+    private void Start()
+    {
+        InGameUiManager.Instance.UnitManage.onActiveStateChanged += active =>
+        {
+            if (!active)
+                SetActiveAttackRange(false);
+        };
     }
 
     public void OnCellPointerDown(GridSystem.Cell cell)

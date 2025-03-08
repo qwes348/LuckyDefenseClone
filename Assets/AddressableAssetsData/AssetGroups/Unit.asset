@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 90013bd4ba8ade946bdca9d46f646ca0
   m_SerializeEntries:
   - m_GUID: 3317278ccc0602b4a95c1eea301eace8
-    m_Address: Prefab/OrcWorrior
+    m_Address: Prefab/Unit
     m_ReadOnly: 0
     m_SerializedLabels:
     - unit

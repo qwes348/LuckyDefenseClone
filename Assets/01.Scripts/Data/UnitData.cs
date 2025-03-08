@@ -1,7 +1,5 @@
 using UnityEngine;
-using EditorAttributes;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "UnitData", menuName = "Scriptable Objects/UnitData")]
 public class UnitData : ScriptableObject
@@ -18,6 +16,8 @@ public class UnitData : ScriptableObject
     private float attackRange;
     [SerializeField]
     private AssetReferenceGameObject unitPrefab;
+    [SerializeField]
+    private AnimatorOverrideController animator;
     
     #region Properties
     public Define.UnitGrade Grade => grade;
@@ -26,6 +26,7 @@ public class UnitData : ScriptableObject
     public float AttackSpeed => attackSpeed;
     public float AttackRagne => attackRange;
     public AssetReferenceGameObject UnitPrefab => unitPrefab;
+    public AnimatorOverrideController Animator => animator;
 
     #endregion
 }

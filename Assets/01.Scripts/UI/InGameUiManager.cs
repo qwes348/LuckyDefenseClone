@@ -1,16 +1,19 @@
+using System;
 using UnityEngine;
 
-public class InGameUiManager : MonoBehaviour
+public class InGameUiManager : StaticMono<InGameUiManager>
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private UnitManageCanvas unitManage;
+    [SerializeField]
+    private UpgradeCanvas upgrade;
+    
+    public UnitManageCanvas UnitManage => unitManage;
+    public UpgradeCanvas Upgrade => upgrade;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        unitManage.SetActive(false);
+        upgrade.SetActiveCanvas(false);
     }
 }

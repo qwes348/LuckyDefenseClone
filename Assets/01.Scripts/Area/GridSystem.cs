@@ -115,15 +115,35 @@ public class GridSystem : MonoBehaviour
     // 유닛 이동
     public void MoveUnits(Cell fromCell, Cell destCell)
     {
-        if (destCell.IsOccupied)
-            return;
-        
-        List<UnitController> units = new List<UnitController>();
-        for (int i = fromCell.MyUnits.Count - 1; i >= 0; i--)
+        if (destCell.IsOccupied) // 스왑
         {
-            units.Add(fromCell.RemoveAndGetUnit());
+            List<UnitController> fromUnits = new List<UnitController>();
+            for (int i = fromCell.MyUnits.Count - 1; i >= 0; i--)
+            {
+                fromUnits.Add(fromCell.MyUnits[i]);
+            }
+            fromCell.ClearUnits();
+            
+            List<UnitController> destUnits = new List<UnitController>();
+            for (int i = destCell.MyUnits.Count - 1; i >= 0; i--)
+            {
+                destUnits.Add(destCell.MyUnits[i]);
+            }
+            destCell.ClearUnits();
+            
+            fromCell.AddUnits(destUnits);
+            destCell.AddUnits(fromUnits);
         }
-        destCell.AddUnits(units);
+        else  // 빈곳으로 이동
+        {
+            List<UnitController> units = new List<UnitController>();
+            for (int i = fromCell.MyUnits.Count - 1; i >= 0; i--)
+            {
+                units.Add(fromCell.MyUnits[i]);
+            }
+            fromCell.ClearUnits();
+            destCell.AddUnits(units);
+        }
     }
 
     private void OnDrawGizmos()
@@ -163,9 +183,14 @@ public class GridSystem : MonoBehaviour
         private GridSystem myGrid;
         private bool isSelected;
 
+        #region Properties
         public bool IsOccupied => myUnits.Count > 0;
         public Vector2Int Coord => coord;
         public List<UnitController> MyUnits => myUnits;
+        public bool IsCanMerge => myUnits.Count == 3;
+        public Define.UnitGrade UnitGrade => myUnits.Count == 0 ? Define.UnitGrade.Normal : myUnits[0].MyUnitData.Grade;
+        public Define.PlayerType PlayerType => myGrid.playerType;
+        #endregion
 
         public Cell(int x, int y, GridSystem grid)
         {
@@ -233,6 +258,7 @@ public class GridSystem : MonoBehaviour
             myUnits.Remove(unit);
             if(myUnits.Count == 0)
                 myGrid.unitCoordDict[unit.MyUnitData].Remove(this);
+            UpdateUnitsPosition();
             return unit;
         }
 
@@ -257,12 +283,12 @@ public class GridSystem : MonoBehaviour
                     break;
                 case 2:
                     myUnits[0].transform.DOMove(GetWorldPosition() + (Vector3.right * 0.1f) + (Vector3.down *  0.1f), 0.15f);
-                    myUnits[1].transform.DOMove(GetWorldPosition() + (Vector3.left * 0.1f) + (Vector3.up * 0.1f), 0.15f);
+                    myUnits[1].transform.DOMove(GetWorldPosition() + (Vector3.left * 0.1f) + (Vector3.up * 0.1f) + (Vector3.forward * 0.1f), 0.15f);
                     break;
                 default:
                     myUnits[0].transform.DOMove(GetWorldPosition() + (Vector3.left * 0.1f) + (Vector3.down *  0.1f), 0.15f);
-                    myUnits[1].transform.DOMove(GetWorldPosition() + (Vector3.left * 0.1f) + (Vector3.up * 0.1f), 0.15f);
-                    myUnits[2].transform.DOMove(GetWorldPosition() + (Vector3.right * 0.1f), 0.15f);
+                    myUnits[1].transform.DOMove(GetWorldPosition() + (Vector3.left * 0.1f) + (Vector3.up * 0.1f) + (Vector3.forward * 0.1f), 0.15f);
+                    myUnits[2].transform.DOMove(GetWorldPosition() + (Vector3.right * 0.1f) + (Vector3.forward * 0.2f), 0.15f);
                     break;
             }
         }

@@ -15,20 +15,50 @@ MonoBehaviour:
   m_GroupName: UnitData
   m_GUID: e12c8997eab4f064cbfb28cc2920eada
   m_SerializeEntries:
+  - m_GUID: 13cccc720ac4a8b46bb426a264d5d8b0
+    m_Address: Data/UnitData-Rare-GoblinGrendier
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - unitData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 615f4248fb9b97c4f9a4df199bfb1ea7
+    m_Address: Data/UnitData-Normal-OrcGrenadier
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - unitData
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6639631c9eade55449b817996205bd25
-    m_Address: Data/UnitData-OrcWorrior
+    m_Address: Data/UnitData-Normal-OrcWorrior
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - unitData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96521288a77a2ae478b3acf0a2550330
+    m_Address: Data/UnitData-Mythical-HammerKing
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - unitData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bcefd1821c82d784381604f5f41d5881
+    m_Address: Data/UnitData-Mythical-Paladin
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - unitData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e3f2eadca662da445bb98f1acd0267e4
+    m_Address: Data/UnitData-Hero-OrcKing
     m_ReadOnly: 0
     m_SerializedLabels:
     - unitData
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e6f8a6fdd89e66f46ace1f43758c43e6
-    m_Address: Data/UnitData-OrcWorrior Hero
+    m_Address: Data/UnitData-Hero-HumanArcher
     m_ReadOnly: 0
     m_SerializedLabels:
     - unitData
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ec38e09e0c04c734eb73429326a8fe51
-    m_Address: Data/UnitData-OrcWorrior Rare
+    m_Address: Data/UnitData-Rare-GoblinScout
     m_ReadOnly: 0
     m_SerializedLabels:
     - unitData

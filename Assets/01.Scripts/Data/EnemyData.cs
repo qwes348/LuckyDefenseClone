@@ -15,6 +15,8 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     private int defensePower;
     [SerializeField]
+    private int prize;
+    [SerializeField]
     private AssetReferenceGameObject enemyPrefab;
     
     #region Properties
@@ -23,6 +25,7 @@ public class EnemyData : ScriptableObject
     public float MoveSpeed => moveSpeed;
     public float MaxHealth => maxHealth;
     public int DefensePower => defensePower;
+    public int Prize => prize;
     public AssetReferenceGameObject EnemyPrefab => enemyPrefab;
 
     #endregion

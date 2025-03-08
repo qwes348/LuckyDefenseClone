@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c859493a6c3115439c9ac4cec67035c, type: 3}
-  m_Name: UnitData-OrcWorrior Rare
+  m_Name: UnitData-Normal-OrcGrenadier
   m_EditorClassIdentifier: 
-  grade: 1
-  unitName: "\uC624\uD06C \uC804\uC0AC"
-  attackPower: 5
+  grade: 0
+  unitName: "\uC624\uD06C \uCC99\uD0C4\uBCD1"
+  attackPower: 3
   attackSpeed: 1
-  attackRange: 1
+  attackRange: 1.5
   unitPrefab:
     m_AssetGUID: 3317278ccc0602b4a95c1eea301eace8
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  animator: {fileID: 22100000, guid: a70cb87283f5aa64798bb09819559d7f, type: 2}

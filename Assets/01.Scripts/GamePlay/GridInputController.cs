@@ -9,6 +9,7 @@ public class GridInputController : MonoBehaviour
     private GridSystem grid;
     private GridGraphicController gridGraphic;
     private GridSystem.Cell pointerDownCell;
+    private bool isDragging;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class GridInputController : MonoBehaviour
     private void Update()
     {
         HandleInput();
+        IsPointerOverUI();
     }
 
     private void HandleInput()
@@ -30,20 +32,34 @@ public class GridInputController : MonoBehaviour
             {
                 pointerDownCell = grid.GetCell(gridPos);
                 if (pointerDownCell == null || !pointerDownCell.IsOccupied)
+                {
+                    gridGraphic.SetActiveAttackRange(false);
+                    pointerDownCell = null;
+                    InGameUiManager.Instance.UnitManage.SetActive(false);
                     return;
+                }
+                
                 gridGraphic.OnCellPointerDown(pointerDownCell);
             }
             else
             {
                 gridGraphic.SetActiveAttackRange(false);
+                pointerDownCell = null;
+                InGameUiManager.Instance.UnitManage.SetActive(false);
             }
         }
+        else if (Input.GetMouseButtonDown(0) && IsPointerOverUI())
+        {
+            // UI위에서 클릭을 시작했으면 드래그로 판정 안함
+            isDragging = false;
+        }
 
-        if (pointerDownCell != null && Input.GetMouseButton(0)) // 드래그
+        if (pointerDownCell != null && Input.GetMouseButton(0) && !IsPointerOverUI()) // 드래그
         {
             var gridPos = MousePosToGridPos();
             if (grid.IsWithinGrid(gridPos))
             {
+                isDragging = true;
                 var cell = grid.GetCell(gridPos);
                 if (cell != null && pointerDownCell != cell)
                 {
@@ -64,24 +80,30 @@ public class GridInputController : MonoBehaviour
             }
         }
 
-        if (pointerDownCell != null && Input.GetMouseButtonUp(0))
+        if (pointerDownCell != null && Input.GetMouseButtonUp(0) && !IsPointerOverUI())
         {
             var gridPos = MousePosToGridPos();
             if (grid.IsWithinGrid(gridPos))
             {
                 var cell = grid.GetCell(gridPos);
-                if (cell != null && pointerDownCell != cell)
+                if (cell != null && pointerDownCell != cell)    // 유닛 이동
                 {
+                    if (!isDragging)
+                        return;
                     grid.MoveUnits(pointerDownCell, cell);
                     gridGraphic.SetActiveAttackRange(false);
+                    InGameUiManager.Instance.UnitManage.SetActive(false);
                 }
                 else  // 처음 클릭한 셀에서 포인터Up했을 때
                 {
                     // TODO: 반투명 셀 그래픽은 off / 셀 포인터 그래픽들 전부 off / 공격범위 on
                     // TODO: 판매 합성 UI On
                     gridGraphic.SetActiveAttackRange(true);
+                    InGameUiManager.Instance.UnitManage.Init(pointerDownCell);
+                    InGameUiManager.Instance.UnitManage.SetActive(true);
                 }
             }
+            isDragging = false;
             gridGraphic.OnCellPointerUp();
         }
     }
@@ -103,7 +125,6 @@ public class GridInputController : MonoBehaviour
         
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerEventData, results);
-
         return results.Any(t => t.gameObject.layer == LayerMask.NameToLayer("UI"));
     }
 }

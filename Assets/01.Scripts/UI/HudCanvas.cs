@@ -15,12 +15,6 @@ public class HudCanvas : MonoBehaviour
     private TextMeshProUGUI enemiesCountText;
     [SerializeField]
     private TextMeshProUGUI spawnCostText;
-    [SerializeField]
-    private TextMeshProUGUI coinAmountText;
-    [SerializeField]
-    private TextMeshProUGUI chipAmountText;
-    [SerializeField]
-    private TextMeshProUGUI unitCountText;
     
     [Header("Images")]
     [SerializeField]
@@ -34,24 +28,20 @@ public class HudCanvas : MonoBehaviour
     {
         unitSpawnButton.onClick.AddListener(() => InGameManagers.UnitSpawnMgr.SpawnRandomUnit(Define.PlayerType.LocalPlayer));
         
-        UpdateWaveNumberText(1);
+        UpdateWaveNumberText(2);
         UpdateSpawnCostText(Define.StartSpawnCost);
-        UpdateCoinAmountText(InGameManagers.CurrencyMgr.CoinAmount);
-        UpdatechipAmountText(InGameManagers.CurrencyMgr.ChipAmount);
-        UpdateUnitCountText(0);
+        UpdateCoin(InGameManagers.CurrencyMgr.CoinAmount);
         UpdateEnemiesCount(0);
         InGameManagers.WaveMgr.onWaveNumberChange += UpdateWaveNumberText;
         InGameManagers.WaveMgr.onWaveTimerTick += UpdateTimerText;
         InGameManagers.WaveMgr.onEnemiesCountChange += UpdateEnemiesCount;
         InGameManagers.UnitSpawnMgr.onSpawnCostChanged += UpdateSpawnCostText;
-        InGameManagers.CurrencyMgr.onCoinAmountChanged += UpdateCoinAmountText;
-        InGameManagers.CurrencyMgr.onChipAmountChanged += UpdateCoinAmountText;
-        InGameManagers.UnitSpawnMgr.onLocalPlayerUnitCountChanged += UpdateUnitCountText;
+        InGameManagers.CurrencyMgr.onCoinAmountChanged += UpdateCoin;
     }
 
     private void UpdateWaveNumberText(int waveNumber)
     {
-        waveNumberText.text = $"WAVE  {waveNumber.ToString()}";
+        waveNumberText.text = $"WAVE  {(waveNumber - 1).ToString()}";
     }
 
     private void UpdateTimerText(int time)
@@ -74,18 +64,9 @@ public class HudCanvas : MonoBehaviour
         spawnCostText.color = InGameManagers.CurrencyMgr.CoinAmount >= cost ? Color.white : Color.red;
     }
 
-    private void UpdateCoinAmountText(int amount)
+    private void UpdateCoin(int amount)
     {
-        coinAmountText.text = $"{amount}";
-    }
-
-    private void UpdatechipAmountText(int amount)
-    {
-        chipAmountText.text = $"{amount}";
-    }
-
-    private void UpdateUnitCountText(int amount)
-    {
-        unitCountText.text = $"{amount}/{Define.MaxUnitCount}";
+        int spawnCost = InGameManagers.UnitSpawnMgr.CurrentSpawnCost;
+        spawnCostText.color = InGameManagers.CurrencyMgr.CoinAmount >= spawnCost ? Color.white : Color.red;
     }
 }

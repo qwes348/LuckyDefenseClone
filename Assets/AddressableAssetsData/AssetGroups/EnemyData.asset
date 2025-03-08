@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 465e61bd70c96034c8a19d7f271577db
   m_SerializeEntries:
   - m_GUID: 521b6ee08fc457041b4504ca0a235540
-    m_Address: Assets/04.Data/EnemyData/EnemyData-Slime.asset
+    m_Address: Data/EnemyData-Slime
     m_ReadOnly: 0
     m_SerializedLabels:
     - enemyData

@@ -16,13 +16,44 @@ public class Define
     public const float DEFAULT_SFX_VOLUME = 0.5f;
 
     public static readonly float[] BGM_PITCH = new float[] { 1.0f, 1.1f, 1.2f };
-    public static readonly Dictionary<UnitGrade, float> DefaultSpawnRateDict = new Dictionary<UnitGrade, float>()
+    // 노강기준 등급 별 소환 확률
+    public static readonly Dictionary<UnitGrade, float> DefaultSpawnProbabilityDict = new Dictionary<UnitGrade, float>()
     {
         {UnitGrade.Normal, 97.47f},
         {UnitGrade.Rare, 1.95f},
         {UnitGrade.Hero, 0.58f},
     };
-    
+    // 강화수치 적용한 소환 확률 계산에 사용할 조정값
+    public static readonly Dictionary<UnitGrade, float> SpawnProbabilityAdjustmentDict = new Dictionary<UnitGrade, float>()
+    {
+        {UnitGrade.Normal, 0.8f},
+        {UnitGrade.Rare, 0.8f},
+        {UnitGrade.Hero, 1.2f},
+    };
+    // 유닛 발판 컬러
+    public static readonly Dictionary<UnitGrade, Color> UnitFoodholdColorDict = new Dictionary<Define.UnitGrade, Color>()
+    {
+        {UnitGrade.Normal, new Color(0.86f, 0.86f, 0.86f, 0.7f)},
+        {UnitGrade.Rare, new Color(0.3820755f, 0.6025897f, 1f, 0.7f)},
+        {UnitGrade.Hero, new Color(0.8769979f, 0f, 1f, 0.7f)},
+        {UnitGrade.Mythical, new Color(1f, 1f, 0f, 0.7f)}
+    };
+    // 업그레이드(강화) 시작 가격
+    public static readonly Dictionary<UpgradeType, (CurrencyType currencyType, int price)> UpgradeStartPriceDict = new Dictionary<UpgradeType, (CurrencyType, int)>()
+    {
+        { UpgradeType.NormalRare, (CurrencyType.Coin, 30) },
+        { UpgradeType.Hero, (CurrencyType.Coin, 50) },
+        { UpgradeType.Mythical, (CurrencyType.Chip, 2) },
+        { UpgradeType.SpawnProbability, (CurrencyType.Coin, 100) }
+    };
+    // 업그레이드(강화) 레벨당 추가 가격
+    public static readonly Dictionary<UpgradeType, int> UpgradePriceAdderDict = new Dictionary<UpgradeType, int>()
+    {
+        { UpgradeType.NormalRare, 30 },
+        { UpgradeType.Hero, 50 },
+        { UpgradeType.Mythical, 1 },
+        { UpgradeType.SpawnProbability, 0 }
+    };
     #endregion
 
     #region enum
@@ -67,6 +98,18 @@ public class Define
     {
         Physical,
         Magical
+    }
+    public enum UpgradeType
+    {
+        NormalRare,
+        Hero,
+        Mythical,
+        SpawnProbability
+    }
+    public enum CurrencyType
+    {
+        Coin,
+        Chip
     }
     public enum Sfx
     {

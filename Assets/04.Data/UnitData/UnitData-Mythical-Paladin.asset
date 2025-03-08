@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c859493a6c3115439c9ac4cec67035c, type: 3}
+  m_Name: UnitData-Mythical-Paladin
+  m_EditorClassIdentifier: 
+  grade: 3
+  unitName: "\uC131\uAE30\uC0AC"
+  attackPower: 25
+  attackSpeed: 0.3
+  attackRange: 1
+  unitPrefab:
+    m_AssetGUID: 3317278ccc0602b4a95c1eea301eace8
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  animator: {fileID: 22100000, guid: 41b901bb33dda6840b0ff49099d3ff30, type: 2}
