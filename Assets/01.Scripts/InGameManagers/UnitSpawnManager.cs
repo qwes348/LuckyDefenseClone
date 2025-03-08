@@ -1,6 +1,8 @@
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,6 +16,7 @@ public class UnitSpawnManager
     private List<UnitData> allUnitDatasPool;
 
     private Dictionary<Define.PlayerType, int> currentUnitsCountDict;
+    private List<MythCombineData> mythCombineDatas;
     
     #region Actions
 
@@ -23,6 +26,7 @@ public class UnitSpawnManager
     
     #region Properties
     public int CurrentSpawnCost => currentSpawnCost;
+    public IReadOnlyList<MythCombineData> MythCombineDatas => mythCombineDatas;
     #endregion
 
     public async UniTask Init()
@@ -34,6 +38,7 @@ public class UnitSpawnManager
             {Define.PlayerType.LocalPlayer, 0},
             {Define.PlayerType.AiPlayer, 0}
         };
+        LoadMythCombineData();
     }
     
     public async UniTask SpawnRandomUnit(Define.PlayerType playerType)
@@ -71,6 +76,32 @@ public class UnitSpawnManager
         var unit = (await Managers.Pool.PopAsync(unitData.UnitPrefab)).GetComponent<UnitController>();
         unit.Init(unitData);
         InGameManagers.FieldMgr.playerGrid.OnNewUnitspawned(unit);
+    }
+
+    public async UniTask CombineMythUnit(MythCombineData combineData, Define.PlayerType playerType)
+    {
+        currentUnitsCountDict[playerType]++;
+        if(playerType == Define.PlayerType.LocalPlayer)
+            onLocalPlayerUnitCountChanged?.Invoke(currentUnitsCountDict[playerType]);
+        
+        GridSystem grid = playerType == Define.PlayerType.LocalPlayer ? InGameManagers.FieldMgr.playerGrid : InGameManagers.FieldMgr.opponentGrid;
+        List<GridSystem.Cell> materialCells = new List<GridSystem.Cell>();
+        foreach (var material in combineData.materialUnits)
+        {
+            var cell = grid.GetCell(GetUnitDataById(material.unitId));
+            if (cell == null)   // 재료 유닛을 못찾은 경우
+                return;
+            materialCells.Add(cell);
+        }
+        foreach (var cell in materialCells)
+        {
+            TrashUnit(cell, playerType);
+        }
+        
+        UnitData mythUnitData = GetUnitDataById(combineData.unitId);
+        var unit = (await Managers.Pool.PopAsync(mythUnitData.UnitPrefab)).GetComponent<UnitController>();
+        unit.Init(mythUnitData);
+        InGameManagers.FieldMgr.playerGrid.OnNewUnitspawned(unit);        
     }
     
     // 소환확률에 따라 랜덤으로 등급을 뽑고 그 등급과 등급의 유닛데이터들을 리턴
@@ -152,6 +183,27 @@ public class UnitSpawnManager
 
     public int GetCurrentUnitsCount(Define.PlayerType playerType)
     {
-        return currentUnitsCountDict[playerType];
+        currentUnitsCountDict.TryGetValue(playerType, out int count);
+        return count;
+    }
+
+    public UnitData GetUnitDataById(int id)
+    {
+        return allUnitDatasPool.First(u => u.UnitId == id);
+    }
+    
+    private void LoadMythCombineData()
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath, "myth_combine_data.json");
+        if (File.Exists(filePath))
+        {
+            string jsonData = File.ReadAllText(filePath);
+            mythCombineDatas = JsonConvert.DeserializeObject<MythCombineDataWrapper>(jsonData).mythCombineDatas;
+        }
+        else
+        {
+            Debug.LogError("신화 조합 데이터 json을 찾을 수 없음");
+            return;
+        }
     }
 }

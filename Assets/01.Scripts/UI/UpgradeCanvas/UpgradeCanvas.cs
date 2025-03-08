@@ -21,7 +21,7 @@ public class UpgradeCanvas : MonoBehaviour
             }
             SetActiveSpawnProbability(false);
             // 도박이나 신화조합 창이 열린상태에서 강화 버튼을 누를수있으므로 다른 창을 꺼준다
-            InGameUiManager.Instance.Gambling.SetActiveCanvas(false);
+            InGameUiManager.Instance.OnUpgradeCanvasActivate();
         }
         gameObject.SetActive(active);
     }

@@ -8,7 +8,7 @@
     "waves": [
       {
         "__comment": "waveRange 0번~1번 까지 같은 설정으로 진행",
-        "waveRange": [1, 4],
+        "waveRange": [1, 99],
         "nextWaveTime": 20,
         "enemies": [
           { "template": "Slime", "count": 40 }

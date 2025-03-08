@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UnitData-Rare-GoblinScout
   m_EditorClassIdentifier: 
   grade: 1
+  unitId: 2001
   unitName: "\uACE0\uBE14\uB9B0 \uC815\uCC30\uBCD1"
   attackPower: 10
   attackSpeed: 0.7
@@ -24,3 +25,4 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   animator: {fileID: 22100000, guid: b3a4e112da56ab54cb703d6a2e75537c, type: 2}
+  thumbnailSprite: {fileID: -4230181108591323607, guid: a1826ef8b25486e499e4a2440311066b, type: 3}

@@ -31,7 +31,7 @@ public class Define
         {UnitGrade.Hero, 1.2f},
     };
     // 유닛 발판 컬러
-    public static readonly Dictionary<UnitGrade, Color> UnitFoodholdColorDict = new Dictionary<Define.UnitGrade, Color>()
+    public static readonly Dictionary<UnitGrade, Color> UnitFootholdColorDict = new Dictionary<Define.UnitGrade, Color>()
     {
         {UnitGrade.Normal, new Color(0.86f, 0.86f, 0.86f, 0.7f)},
         {UnitGrade.Rare, new Color(0.3820755f, 0.6025897f, 1f, 0.7f)},

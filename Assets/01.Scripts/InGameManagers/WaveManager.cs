@@ -36,7 +36,7 @@ public class WaveManager
 
     private void LoadWaveData()
     {
-        string filePath = Application.streamingAssetsPath + "/wave_data.json";
+        string filePath = Path.Combine(Application.streamingAssetsPath, "wave_data.json");
         if (File.Exists(filePath))
         {
             string jsonData = File.ReadAllText(filePath);
@@ -44,7 +44,7 @@ public class WaveManager
         }
         else
         {
-            Debug.LogError("웨이브 데이터 json파일 찾을 수 없음");
+            Debug.LogError("웨이브 데이터 json을 찾을 수 없음");
             return;
         }
     }

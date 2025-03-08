@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UnitData-Rare-GoblinGrendier
   m_EditorClassIdentifier: 
   grade: 1
+  unitId: 2002
   unitName: "\uACE0\uBE14\uB9B0 \uCC99\uD0C4\uBCD1"
   attackPower: 7
   attackSpeed: 0.7
@@ -24,3 +25,4 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   animator: {fileID: 22100000, guid: 76d29eee18a3b1c41b0f745bc89fc96f, type: 2}
+  thumbnailSprite: {fileID: 1723869735436879832, guid: d1c5ffb470658344f8621f62e6174f58, type: 3}

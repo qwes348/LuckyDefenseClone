@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UnitData-Hero-OrcKing
   m_EditorClassIdentifier: 
   grade: 2
+  unitId: 3001
   unitName: "\uC624\uD06C \uD0B9"
   attackPower: 15
   attackSpeed: 0.5
@@ -24,3 +25,4 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   animator: {fileID: 22100000, guid: f7afe85601764614ea8cb07226115c89, type: 2}
+  thumbnailSprite: {fileID: 4528382388787556690, guid: 92e458ee2142c21429e70aa45b61ca5e, type: 3}

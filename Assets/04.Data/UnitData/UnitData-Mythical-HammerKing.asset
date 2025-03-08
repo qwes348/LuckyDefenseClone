@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UnitData-Mythical-HammerKing
   m_EditorClassIdentifier: 
   grade: 3
+  unitId: 4002
   unitName: "\uD574\uBA38 \uD0B9"
   attackPower: 30
   attackSpeed: 0.4
@@ -24,3 +25,4 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   animator: {fileID: 22100000, guid: 912784227817e1245b1a02d4c8c86847, type: 2}
+  thumbnailSprite: {fileID: 4236677631525818213, guid: 9fba67521451ffe4382949194d5432d2, type: 3}

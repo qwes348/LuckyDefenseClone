@@ -146,6 +146,18 @@ public class GridSystem : MonoBehaviour
         }
     }
 
+    public bool IsUnitExist(UnitData unitData)
+    {
+        unitCoordDict.TryGetValue(unitData, out List<Cell> cells);
+        return cells != null && cells.Count != 0;
+    }
+
+    public Cell GetCell(UnitData unitData)
+    {
+        unitCoordDict.TryGetValue(unitData, out List<Cell> cells);
+        return cells != null && cells.Count != 0 ? cells[0] : null;
+    }
+
     private void OnDrawGizmos()
     {
         for (int y = 0; y < height; y++)
@@ -258,7 +270,8 @@ public class GridSystem : MonoBehaviour
             myUnits.Remove(unit);
             if(myUnits.Count == 0)
                 myGrid.unitCoordDict[unit.MyUnitData].Remove(this);
-            UpdateUnitsPosition();
+            else
+                UpdateUnitsPosition();
             return unit;
         }
 

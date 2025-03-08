@@ -1,0 +1,22 @@
+{
+    "mythCombineDatas" : [
+        {
+            "unitName" : "성기사",
+            "unitId" : 4001,
+            "materialUnits" : [
+                {"unitName" : "궁수", "unitId" : 3002 },
+                {"unitName" : "고블린 척탄병", "unitId" : 2002},
+                {"unitName" : "고블린 정찰병", "unitId" : 2001}
+            ]
+        },
+        {
+            "unitName" : "해머 킹",
+            "unitId" : 4002,
+            "materialUnits" : [
+                {"unitName" : "오크 킹", "unitId" : 3001 },
+                {"unitName" : "고블린 척탄병", "unitId" : 2002},
+                {"unitName" : "고블린 정찰병", "unitId" : 2001}
+            ]
+        }
+    ] 
+}

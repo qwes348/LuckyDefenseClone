@@ -37,7 +37,8 @@ public class UnitController : MonoBehaviour
         anim.runtimeAnimatorController = data.Animator;
         // Debug.LogErrorFormat("data: {0}, anim: {1}", data.AttackSpeed, anim.GetFloat("AttackSpeed"));
         gameObject.name = data.UnitName;
-        foothold.color = Define.UnitFoodholdColorDict[myUnitData.Grade];
+        foothold.color = Define.UnitFootholdColorDict[myUnitData.Grade];
+        anim.transform.localScale = data.Grade == Define.UnitGrade.Mythical ? Vector3.one * 2f : Vector3.one * 1.5f;    // 신화등급은 크게
 
         await UniTask.Yield();
         anim.SetFloat(animParamAttackSpeed, 1f / data.AttackSpeed);
@@ -53,6 +54,8 @@ public class UnitController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (myCell == null)
+            return;
         if (attackTimer > 0 || myUnitData == null)
             return;
         CheckAttackRange();

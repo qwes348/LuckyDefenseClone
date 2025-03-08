@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UnitData-Normal-OrcGrenadier
   m_EditorClassIdentifier: 
   grade: 0
+  unitId: 1002
   unitName: "\uC624\uD06C \uCC99\uD0C4\uBCD1"
   attackPower: 3
   attackSpeed: 1
@@ -24,3 +25,4 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   animator: {fileID: 22100000, guid: a70cb87283f5aa64798bb09819559d7f, type: 2}
+  thumbnailSprite: {fileID: 5311959985982804876, guid: c01ed2d0c1b5cd14ebdf56d33c5c0bdf, type: 3}

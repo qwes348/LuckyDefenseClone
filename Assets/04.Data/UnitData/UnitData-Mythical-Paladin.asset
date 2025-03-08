@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UnitData-Mythical-Paladin
   m_EditorClassIdentifier: 
   grade: 3
+  unitId: 4001
   unitName: "\uC131\uAE30\uC0AC"
   attackPower: 25
   attackSpeed: 0.3
@@ -24,3 +25,4 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   animator: {fileID: 22100000, guid: 41b901bb33dda6840b0ff49099d3ff30, type: 2}
+  thumbnailSprite: {fileID: 1448252480329919801, guid: 71b19fb2b9e82ea4bb9970f45ee6361a, type: 3}

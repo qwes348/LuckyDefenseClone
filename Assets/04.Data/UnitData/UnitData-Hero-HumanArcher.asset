@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UnitData-Hero-HumanArcher
   m_EditorClassIdentifier: 
   grade: 2
+  unitId: 3002
   unitName: "\uAD81\uC218"
   attackPower: 12
   attackSpeed: 0.5
@@ -24,3 +25,4 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   animator: {fileID: 22100000, guid: 234aaedc27ce9d64ca5effaee9a71358, type: 2}
+  thumbnailSprite: {fileID: -7033695032449837365, guid: bf84df2cd36d75843b88d5f26ceab804, type: 3}

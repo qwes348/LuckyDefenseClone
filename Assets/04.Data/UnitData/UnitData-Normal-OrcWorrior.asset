@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UnitData-Normal-OrcWorrior
   m_EditorClassIdentifier: 
   grade: 0
+  unitId: 1001
   unitName: "\uC624\uD06C \uC804\uC0AC"
   attackPower: 5
   attackSpeed: 1
@@ -24,3 +25,4 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   animator: {fileID: 22100000, guid: ca20050a7e47b534f8035aacda5f9274, type: 2}
+  thumbnailSprite: {fileID: 4571226829092849726, guid: a7b8054ab28f5bc44a557f74d0a3a1b5, type: 3}
