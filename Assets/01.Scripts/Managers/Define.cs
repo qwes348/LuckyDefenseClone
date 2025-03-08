@@ -54,6 +54,16 @@ public class Define
         { UpgradeType.Mythical, 1 },
         { UpgradeType.SpawnProbability, 0 }
     };
+    public static readonly Dictionary<UnitGrade, int> GamblingPriceDict = new Dictionary<UnitGrade, int>()
+    {
+        {UnitGrade.Rare, 1},
+        {UnitGrade.Hero, 1},
+    };
+    public static readonly Dictionary<UnitGrade, float> GamblingProbabilityDict = new Dictionary<UnitGrade, float>()
+    {
+        {UnitGrade.Rare, 0.6f},
+        {UnitGrade.Hero, 0.2f}
+    };
     #endregion
 
     #region enum

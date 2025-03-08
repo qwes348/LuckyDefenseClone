@@ -40,6 +40,9 @@ public class UnitSpawnManager
     {
         if (InGameManagers.CurrencyMgr.CoinAmount < currentSpawnCost)
             return;
+        if (GetCurrentUnitsCount(playerType) >= Define.MaxUnitCount)
+            return;
+        
         InGameManagers.CurrencyMgr.CoinAmount -= currentSpawnCost;
         currentUnitsCountDict[playerType]++;
         if(playerType == Define.PlayerType.LocalPlayer)
@@ -55,7 +58,8 @@ public class UnitSpawnManager
         currentSpawnCost += Define.SpawnCostIncrease;
         onSpawnCostChanged?.Invoke(currentSpawnCost);
     }
-
+    
+    // 특정 등급 유닛을 소환
     public async UniTask SpawnGradeUnit(Define.UnitGrade unitGrade, Define.PlayerType playerType)
     {
         currentUnitsCountDict[playerType]++;
@@ -144,5 +148,10 @@ public class UnitSpawnManager
         }
         
         TrashUnit(targetCell, playerType);
+    }
+
+    public int GetCurrentUnitsCount(Define.PlayerType playerType)
+    {
+        return currentUnitsCountDict[playerType];
     }
 }
