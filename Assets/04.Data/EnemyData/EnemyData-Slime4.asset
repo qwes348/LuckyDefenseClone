@@ -16,7 +16,7 @@ MonoBehaviour:
   unitId: 1004
   unitName: "\uC2AC\uB77C\uC784"
   moveSpeed: 0.5
-  maxHealth: 250
+  maxHealth: 500
   defensePower: 1
   prizeType: 0
   prize: 2
