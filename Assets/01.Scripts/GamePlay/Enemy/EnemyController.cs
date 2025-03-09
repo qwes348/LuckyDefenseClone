@@ -38,6 +38,8 @@ public class EnemyController : MonoBehaviour
 
     public EnemyData MyEnemyData => myEnemyData;
     public Define.EnemyState CurrentState => currentState;
+    public Transform BodyTransform => anim.transform;
+    public float CurrentHelth => currentHelth;
 
     #endregion
     
@@ -55,6 +57,8 @@ public class EnemyController : MonoBehaviour
         currentState = Define.EnemyState.Move;
         if(anim == null)
             anim = GetComponentInChildren<Animator>();
+        anim.runtimeAnimatorController = newData.Animator;
+        anim.transform.localScale = newData.Grade == Define.EnemyGrade.Normal ? Vector3.one : Vector3.one * 2f; // 보스는 크게
         GetComponent<Collider2D>().enabled = true;
     }
 
@@ -87,8 +91,9 @@ public class EnemyController : MonoBehaviour
     {
         if (currentState != Define.EnemyState.Move)
             return;
+        if (myEnemyData == null)
+            return;
         
-        // TODO: 체력바에 반영
         float finalDamage = 0f;
         switch (damageType)
         {
@@ -105,7 +110,6 @@ public class EnemyController : MonoBehaviour
 
         if (currentHelth <= 0)
         {
-            // TODO: 쥬금 애니메이션 실행
             OnDied().Forget();
         }
     }

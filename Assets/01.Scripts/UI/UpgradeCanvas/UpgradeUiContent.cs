@@ -54,7 +54,7 @@ public class UpgradeUiContent : MonoBehaviour
 
     public void Upgrade()
     {
-        InGameManagers.UpgradeMgr.Upgrade(myUpgradeType);
+        InGameManagers.UpgradeMgr.Upgrade(myUpgradeType, Define.PlayerType.LocalPlayer);
         Init();
     }
 }

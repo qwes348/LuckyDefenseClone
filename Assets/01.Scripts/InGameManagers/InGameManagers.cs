@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using EditorAttributes;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,8 @@ public class InGameManagers : MonoBehaviour
             {
                 instance = go.GetComponent<InGameManagers>();
             }
+
+            Managers.Game.onGameStateChanged += instance.OnGameStateChanged;
             
             instance.currencyMgr.Init();
             instance.upgradeMgr.Init();
@@ -75,6 +78,9 @@ public class InGameManagers : MonoBehaviour
         {
             return;
         }
+        
+        Managers.Game.onGameStateChanged -= OnGameStateChanged;
+        
         instance = null;
         unitSpawnMgr = null;
         fieldMgr = null;
@@ -83,16 +89,42 @@ public class InGameManagers : MonoBehaviour
         initialized = false;
     }
 
-    [Button]
-    public void SpawnTest()
+    private void OnGameStateChanged(Define.GameState state)
     {
-        unitSpawnMgr.SpawnRandomUnit(Define.PlayerType.LocalPlayer);
+        switch (state)
+        {
+            case Define.GameState.None:
+                break;
+            case Define.GameState.Running:
+                waveMgr.OnGameStart();
+                break;
+            case Define.GameState.GameOver:
+                OnGameOver();
+                break;
+        }
+    }
+
+    private void OnGameOver()
+    {
+        // DOTween.defaultTimeScaleIndependent = true;
+        // await DOVirtual.Float(1f, 0f, 1.5f, v => Time.timeScale = v);
+        InGameUiManager.Instance.GameOver.SetActiveCanvas(true);
+    }
+
+    public void Retry()
+    {
+        Managers.Scene.LoadScene(Define.Scene.Game);
+    }
+
+    public void GameStart()
+    {
+        Managers.Game.GameState = Define.GameState.Running;
     }
 
     [Button]
-    public void WaveSpawnTest()
+    public void GameOverDebug()
     {
-        waveMgr.StartWaveTimer(5);
+        Managers.Game.GameState = Define.GameState.GameOver;
     }
 }
 
@@ -100,7 +132,19 @@ public class InGameManagers : MonoBehaviour
 public class FieldManager
 {
     public GridSystem playerGrid;
-    public GridSystem opponentGrid;
-    [FormerlySerializedAs("enemyWaypoints")]
+    public GridSystem aiPlayerGrid;
     public EnemyWaypointsContainer enemyWaypointsContainer;
+
+    public GridSystem GetGridSystem(Define.PlayerType playerType)
+    {
+        switch (playerType)
+        {
+            case Define.PlayerType.LocalPlayer:
+                return playerGrid;
+            case Define.PlayerType.AiPlayer:
+                return aiPlayerGrid;
+        }
+
+        return null;
+    }
 }

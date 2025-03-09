@@ -20,18 +20,30 @@ public class WaveManager
     [SerializeField, ReadOnly]
     private List<EnemyController> currentSpawnedEnemies;
 
+    private List<EnemyController> currentSpawnedBosses;
+
     public Action<int> onWaveTimerTick;
     public Action<int> onWaveNumberChange;
     public Action<int> onEnemiesCountChange;
     public Action<EnemyController> onEnemySpawned;
+    public Action onBossWaveStart;
+    public Action onBossAllDied;
+    
+    public int CurrentWaveNumber => currentWaveNumber;
 
     public async UniTask Init()
     {
         currentWaveNumber = 1;
         currentSpawnedEnemies = new List<EnemyController>();
+        currentSpawnedBosses = new List<EnemyController>();
         allEnemyDatasPool = await Managers.Resource.LoadAssetsByLabel<EnemyData>("enemyData");
         LoadWaveData();
-        InGameManagers.Instance.onInitialized += () => StartWaveTimer(5);
+        // InGameManagers.Instance.onInitialized += () => StartWaveTimer(5);
+    }
+
+    public void OnGameStart()
+    {
+        StartWaveTimer(5);
     }
 
     private void LoadWaveData()
@@ -51,21 +63,21 @@ public class WaveManager
     
     public async UniTask StartWaveTimer(int time)
     {
+        if(Managers.Game.GameState == Define.GameState.GameOver)
+            return;
+        
         while (time > -1)
         {
             onWaveTimerTick?.Invoke(time);
             await UniTask.Delay(TimeSpan.FromSeconds(1));
             time--;
         }
-
+        
         SpawnNextWave();
+        // 스폰이 다되길 기다리지않고 바로 다음 웨이브 타이머 시작
+        StartWaveTimer(FindWave(currentWaveNumber).nextWaveTime);
         currentWaveNumber++;
         onWaveNumberChange?.Invoke(currentWaveNumber);
-        
-        // 스폰이 다되길 기다리지않고 바로 다음 웨이브 타이머 시작
-        var nextWave = FindWave(currentWaveNumber);
-        if (nextWave != null)
-            StartWaveTimer(nextWave.nextWaveTime);
     }
 
     private Wave FindWave(int waveNumber)
@@ -80,15 +92,37 @@ public class WaveManager
 
     private async UniTask SpawnNextWave()
     {
+        if (currentSpawnedBosses.Count > 0)
+        {
+            Managers.Game.GameState = Define.GameState.GameOver;
+            return;
+        }
+        
         Wave wave = FindWave(currentWaveNumber);
+        bool isStartEventFired = false;
         for (int i = 0; i < wave.enemies.Length; i++)   // 지금은 없지만 한 웨이브에 여러 종류의 몬스터가 나올 경우를 위한 for문
         {
-            var data = allEnemyDatasPool.Find(ed => ed.UnitName == wave.enemies[i].template);
             var template = waveData.enemyTemplates[wave.enemies[i].template];
+            var data = allEnemyDatasPool.Find(ed => ed.UnitId == template.unitId);
+            if(!isStartEventFired)
+            {
+                if (data.Grade == Define.EnemyGrade.Boss)
+                {
+                    onBossWaveStart?.Invoke();
+                    InGameUiManager.Instance.WaveNotice.ShowBossWave(currentWaveNumber, data, wave.nextWaveTime);
+                }
+                else
+                {
+                    InGameUiManager.Instance.WaveNotice.ShowNormal(currentWaveNumber);
+                }
+                isStartEventFired = true;
+            }
             for (int j = 0; j < wave.enemies[i].count; j++) // 한 종류씩 count만큼 소환한다
             {
                 // 짝수번째는 플레이어측 소환 홀수번째는 ai플레이어측 소환
                 await SpawnEnemy(data, j % 2 == 0 ? Define.PlayerType.LocalPlayer : Define.PlayerType.AiPlayer);
+                if (Managers.Game.GameState == Define.GameState.GameOver)
+                    return;
                 await UniTask.Delay(TimeSpan.FromSeconds(template.spawnInterval));
             }            
         }
@@ -103,15 +137,29 @@ public class WaveManager
         enemy.Init(data, playerType);
         enemy.gameObject.SetActive(true);
         currentSpawnedEnemies.Add(enemy);
+        if(enemy.MyEnemyData.Grade == Define.EnemyGrade.Boss)
+            currentSpawnedBosses.Add(enemy);
         onEnemiesCountChange?.Invoke(currentSpawnedEnemies.Count);
         onEnemySpawned?.Invoke(enemy);
+
+        if (currentSpawnedEnemies.Count > Define.MaxEnemyCount)
+        {
+            Managers.Game.GameState = Define.GameState.GameOver;
+        }
     }
 
     public void OnEnemyDie(EnemyController enemy)
     {
-        InGameManagers.CurrencyMgr.CoinAmount += enemy.MyEnemyData.Prize;
+        InGameManagers.CurrencyMgr.AddCurrency(enemy.MyEnemyData.Prize, enemy.MyEnemyData.PrizeType, Define.PlayerType.LocalPlayer);
+        InGameManagers.CurrencyMgr.AddCurrency(enemy.MyEnemyData.Prize, enemy.MyEnemyData.PrizeType, Define.PlayerType.AiPlayer);
         currentSpawnedEnemies.Remove(enemy);
         onEnemiesCountChange?.Invoke(currentSpawnedEnemies.Count);
+        if (enemy.MyEnemyData.Grade == Define.EnemyGrade.Boss)
+        {
+            currentSpawnedBosses.Remove(enemy);
+            if(currentSpawnedBosses.Count == 0)
+                onBossAllDied?.Invoke();
+        }
         Managers.Pool.Push(enemy.GetComponent<Poolable>());
     }
 }

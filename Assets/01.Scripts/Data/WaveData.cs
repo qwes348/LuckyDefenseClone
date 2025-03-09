@@ -12,6 +12,7 @@ public class WaveData
 public class EnemyTemplate
 {
     public string name;
+    public int unitId;
     public float spawnInterval;
 }
 

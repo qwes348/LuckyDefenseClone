@@ -92,6 +92,10 @@ public class UnitController : MonoBehaviour
 
     private void CheckAttackRange()
     {
+        for (int i = 0; i < overlapColliders.Length; i++)
+        {
+            overlapColliders[i] = null;
+        }
         Physics2D.OverlapCircleNonAlloc(transform.position, myUnitData.AttackRagne, overlapColliders, LayerMask.GetMask("Enemy"));
     }
 

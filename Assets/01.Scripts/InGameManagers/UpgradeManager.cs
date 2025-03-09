@@ -5,10 +5,8 @@ using UnityEngine;
 [Serializable]
 public class UpgradeManager
 {
-    [SerializeField]
-    private SerializedDictionary<Define.UpgradeType, int> upgradeDict;
-    [SerializeField]
-    private SerializedDictionary<Define.UpgradeType, int> aiPlayerUpgradeDict;
+    private Dictionary<Define.UpgradeType, int> upgradeDict = new Dictionary<Define.UpgradeType, int>();
+    private Dictionary<Define.UpgradeType, int> aiPlayerUpgradeDict = new Dictionary<Define.UpgradeType, int>();
 
     public Action<Define.UpgradeType> onUpgrade;
 
@@ -27,27 +25,32 @@ public class UpgradeManager
         return level;
     }
 
-    public void Upgrade(Define.UpgradeType type)    // TODO: AI플레이어 업그레이드함수 구현
+    public IReadOnlyDictionary<Define.UpgradeType, int> GetUpgradeDict(Define.PlayerType playerType)
     {
-        int price = Define.UpgradeStartPriceDict[type].price + GetUpgradeLevel(type) * Define.UpgradePriceAdderDict[type];
-        Define.CurrencyType currencyType = Define.UpgradeStartPriceDict[type].currencyType;
-        switch (currencyType)
-        {
-            case Define.CurrencyType.Coin:
-                if (InGameManagers.CurrencyMgr.CoinAmount < price)
-                    return;
-                InGameManagers.CurrencyMgr.CoinAmount -= price;
-                break;
-            case Define.CurrencyType.Chip:
-                if(InGameManagers.CurrencyMgr.ChipAmount < price)
-                    return;
-                InGameManagers.CurrencyMgr.ChipAmount -= price;
-                break;
-        }
+        return playerType == Define.PlayerType.LocalPlayer ? upgradeDict : aiPlayerUpgradeDict;
+    }
+
+    public void Upgrade(Define.UpgradeType type, Define.PlayerType playerType)    // TODO: AI플레이어 업그레이드함수 구현
+    {
+        var costPair = GetCurrentUpgradeCost(type, playerType); 
+        int cost = costPair.cost;
+        Define.CurrencyType currencyType = costPair.currencyType;
         
-        if (!upgradeDict.TryAdd(type, 1))
-            upgradeDict[type]++;
+        if (InGameManagers.CurrencyMgr.GetCurrency(costPair.currencyType, playerType) < cost)
+            return;
+        InGameManagers.CurrencyMgr.AddCurrency(cost * -1, currencyType, playerType);
         
-        onUpgrade?.Invoke(type);
+        var dict = playerType == Define.PlayerType.LocalPlayer ? upgradeDict : aiPlayerUpgradeDict;
+        if (!dict.TryAdd(type, 1))
+            dict[type]++;
+        
+        if(playerType == Define.PlayerType.LocalPlayer)
+            onUpgrade?.Invoke(type);
+    }
+
+    public (Define.CurrencyType currencyType, int cost) GetCurrentUpgradeCost(Define.UpgradeType type, Define.PlayerType playerType)
+    {
+        int level = GetUpgradeLevel(type, playerType);
+        return (Define.UpgradeStartPriceDict[type].currencyType, Define.UpgradeStartPriceDict[type].price + Define.UpgradePriceAdderDict[type] * level);
     }
 }

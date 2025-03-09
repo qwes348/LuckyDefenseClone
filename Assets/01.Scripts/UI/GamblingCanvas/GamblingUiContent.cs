@@ -29,23 +29,7 @@ public class GamblingUiContent : MonoBehaviour
 
     public void Gamble()
     {
-        if (InGameManagers.CurrencyMgr.ChipAmount < Define.GamblingPriceDict[grade])
-            return;
-        if (InGameManagers.UnitSpawnMgr.GetCurrentUnitsCount(Define.PlayerType.LocalPlayer) >= Define.MaxUnitCount)
-            return;
-        
-        InGameManagers.CurrencyMgr.ChipAmount -= Define.GamblingPriceDict[grade];
-
-        var randomValue = Random.value;
         // TODO: 도박 성공/실패 연출
-        if (randomValue <= Define.GamblingProbabilityDict[grade])
-        {
-            Debug.Log("도박 성공");
-            InGameManagers.UnitSpawnMgr.SpawnGradeUnit(grade, Define.PlayerType.LocalPlayer);
-        }
-        else
-        {
-            Debug.Log("도박 실패");
-        }
+        InGameManagers.UnitSpawnMgr.Gamble(Define.PlayerType.LocalPlayer, grade, gambleResult: null);
     }
 }

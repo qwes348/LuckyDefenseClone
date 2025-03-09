@@ -5,6 +5,8 @@ public class EnemyHpCanvas : MonoBehaviour
 {
     [SerializeField]
     private Poolable enemyHpBarPrefab;
+    [SerializeField]
+    private Poolable bossHpBarPrefab;
 
     private void Start()
     {
@@ -14,7 +16,11 @@ public class EnemyHpCanvas : MonoBehaviour
     public void AttachToEnemy(EnemyController enemy)
     {
         // TODO: 보스 체력바
-        var hpBar = Managers.Pool.Pop(enemyHpBarPrefab).GetComponent<EnemyHpBar>();
+        EnemyHpBar hpBar;
+        if (enemy.MyEnemyData.Grade == Define.EnemyGrade.Normal)
+            hpBar = Managers.Pool.Pop(enemyHpBarPrefab).GetComponent<EnemyHpBar>();
+        else
+            hpBar = Managers.Pool.Pop(bossHpBarPrefab).GetComponent<EnemyHpBar>();
         hpBar.transform.SetParent(transform);
         hpBar.Init(enemy);
     }

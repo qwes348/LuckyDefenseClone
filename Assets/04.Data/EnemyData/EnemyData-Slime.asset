@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: EnemyData-Slime
   m_EditorClassIdentifier: 
   grade: 0
-  unitName: Slime
+  unitId: 1001
+  unitName: "\uC2AC\uB77C\uC784"
   moveSpeed: 0.5
-  maxHealth: 10
+  maxHealth: 15
   defensePower: 1
+  prizeType: 0
   prize: 1
   enemyPrefab:
     m_AssetGUID: f1158dcbddb78d34096b13e04922c007
@@ -24,3 +26,4 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  animator: {fileID: 22100000, guid: 9cbcfb3e52f08a041bb8d77766b0e584, type: 2}

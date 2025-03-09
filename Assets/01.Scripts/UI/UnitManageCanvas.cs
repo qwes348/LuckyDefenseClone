@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UnitManageCanvas : MonoBehaviour
 {
     [SerializeField]
-    private Button combineButton;
+    private Button mergeButton;
     [SerializeField]
     private Button trashButton;
     [SerializeField]
@@ -21,7 +21,7 @@ public class UnitManageCanvas : MonoBehaviour
 
     private void Awake()
     {
-        combineButton.onClick.AddListener(Merge);
+        mergeButton.onClick.AddListener(Merge);
         trashButton.onClick.AddListener(Trash);
         sellButton.onClick.AddListener(Sell);
     }
@@ -31,25 +31,25 @@ public class UnitManageCanvas : MonoBehaviour
         targetCell = cell;
         transform.position = targetCell.GetWorldPosition();
         trashButton.gameObject.SetActive(cell.MyUnits[0].MyUnitData.Grade == Define.UnitGrade.Normal);
-        combineButton.interactable = cell.IsCanMerge;
+        mergeButton.interactable = cell.IsCanMerge;
         sellButton.gameObject.SetActive(cell.MyUnits[0].MyUnitData.Grade is Define.UnitGrade.Rare or Define.UnitGrade.Hero);
         
         switch (cell.UnitGrade)
         {
             case Define.UnitGrade.Normal:
                 sellButton.gameObject.SetActive(false);
-                combineButton.gameObject.SetActive(true);
+                mergeButton.gameObject.SetActive(true);
                 break;
             case Define.UnitGrade.Rare:
                 priceText.text = "+1";
-                combineButton.gameObject.SetActive(true);
+                mergeButton.gameObject.SetActive(true);
                 break;
             case Define.UnitGrade.Hero:
                 priceText.text = "+2";
-                combineButton.gameObject.SetActive(false);  // 다음은 신화등급이니까 이걸로 합성하면 안됨
+                mergeButton.gameObject.SetActive(false);  // 다음은 신화등급이니까 이걸로 합성하면 안됨
                 break;
             case Define.UnitGrade.Mythical:
-                combineButton.gameObject.SetActive(false);
+                mergeButton.gameObject.SetActive(false);
                 trashButton.gameObject.SetActive(false);
                 sellButton.gameObject.SetActive(false);
                 break;

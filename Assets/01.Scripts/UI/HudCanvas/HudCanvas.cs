@@ -15,6 +15,8 @@ public class HudCanvas : MonoBehaviour
     private TextMeshProUGUI enemiesCountText;
     [SerializeField]
     private TextMeshProUGUI spawnCostText;
+    [SerializeField]
+    private TextMeshProUGUI bossTimerText;
     
     [Header("Images")]
     [SerializeField]
@@ -23,20 +25,34 @@ public class HudCanvas : MonoBehaviour
     [Header("Buttons")]
     [SerializeField]
     private Button unitSpawnButton;
+    
+    [Header("Objects")]
+    [SerializeField]
+    private GameObject bossTimerObject;
 
     private void Start()
     {
+        SetActiveBossTimer(false);
         unitSpawnButton.onClick.AddListener(() => InGameManagers.UnitSpawnMgr.SpawnRandomUnit(Define.PlayerType.LocalPlayer));
         
         UpdateWaveNumberText(2);
         UpdateSpawnCostText(Define.StartSpawnCost);
         UpdateCoin(InGameManagers.CurrencyMgr.CoinAmount);
         UpdateEnemiesCount(0);
+        UpdateTimerText(0);
         InGameManagers.WaveMgr.onWaveNumberChange += UpdateWaveNumberText;
         InGameManagers.WaveMgr.onWaveTimerTick += UpdateTimerText;
         InGameManagers.WaveMgr.onEnemiesCountChange += UpdateEnemiesCount;
+        InGameManagers.WaveMgr.onBossWaveStart += () => SetActiveBossTimer(true);
+        InGameManagers.WaveMgr.onBossAllDied += () => SetActiveBossTimer(false);
         InGameManagers.UnitSpawnMgr.onSpawnCostChanged += UpdateSpawnCostText;
         InGameManagers.CurrencyMgr.onCoinAmountChanged += UpdateCoin;
+    }
+
+    public void SetActiveBossTimer(bool active)
+    {
+        bossTimerText.color = Color.white;
+        bossTimerObject.SetActive(active);
     }
 
     private void UpdateWaveNumberText(int waveNumber)
@@ -50,6 +66,13 @@ public class HudCanvas : MonoBehaviour
         int sec = time % 60;
 
         timerText.text = $"{min:D2}:{sec:D2}";
+
+        if (!bossTimerObject.activeSelf)
+        {
+            return;
+        }
+        bossTimerText.text = $"{min:D2}:{sec:D2}";
+        bossTimerText.color = time <= 10 ? Color.red : Color.white;
     }
 
     private void UpdateEnemiesCount(int count)

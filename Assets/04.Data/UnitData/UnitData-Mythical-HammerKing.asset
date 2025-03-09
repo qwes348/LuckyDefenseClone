@@ -17,7 +17,7 @@ MonoBehaviour:
   unitName: "\uD574\uBA38 \uD0B9"
   attackPower: 30
   attackSpeed: 0.4
-  attackRange: 1
+  attackRange: 1.2
   unitPrefab:
     m_AssetGUID: 3317278ccc0602b4a95c1eea301eace8
     m_SubObjectName: 

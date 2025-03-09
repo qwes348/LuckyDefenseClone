@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: cc532fc2955efc149871ef1f5e46f1b8
   m_SerializeEntries:
   - m_GUID: f1158dcbddb78d34096b13e04922c007
-    m_Address: Prefab/EnemySlime
+    m_Address: Prefab/EnemyBase
     m_ReadOnly: 0
     m_SerializedLabels:
     - enemy

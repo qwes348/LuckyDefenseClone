@@ -19,8 +19,9 @@ public class GridSystem : MonoBehaviour
     private Dictionary<UnitData, List<Cell>> unitCoordDict = new Dictionary<UnitData, List<Cell>>();
     
     private const float CellSize = 0.6f;
-
     private GridGraphicController gridGraphic;
+    
+    public IReadOnlyDictionary<UnitData, List<Cell>> UnitCoordDict => unitCoordDict;
 
     private void Start()
     {
@@ -35,7 +36,7 @@ public class GridSystem : MonoBehaviour
             gridGraphic = GetComponent<GridGraphicController>();
         }
         else
-            InGameManagers.FieldMgr.opponentGrid = this;
+            InGameManagers.FieldMgr.aiPlayerGrid = this;
         
         rows = new Row[height];
         for (int y = 0; y < height; y++)
@@ -66,19 +67,41 @@ public class GridSystem : MonoBehaviour
         // 같은 유닛이있는 들어갈 자리를 못찾았다면 첫번째 빈 셀에 들어감
         if(targetCell == null)
         {
-            for (int y = 0; y < height; y++)
+            // 로컬 플레이어는 왼쪽 위부터
+            if (playerType == Define.PlayerType.LocalPlayer)
             {
-                for (int x = 0; x < width; x++)
+                for (int y = height - 1; y >= 0; y--)
                 {
-                    if (rows[y].columns[x].IsOccupied)
+                    for (int x = 0; x < width; x++)
                     {
-                        continue;
+                        if (rows[y].columns[x].IsOccupied)
+                        {
+                            continue;
+                        }
+                        targetCell = rows[y].columns[x];
+                        break;
                     }
-                    targetCell = rows[y].columns[x];
-                    break;
+                    if (targetCell != null)
+                        break;
                 }
-                if (targetCell != null)
-                    break;
+            }
+            // AI플레이어는 왼쪽 아래 부터
+            else
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        if (rows[y].columns[x].IsOccupied)
+                        {
+                            continue;
+                        }
+                        targetCell = rows[y].columns[x];
+                        break;
+                    }
+                    if (targetCell != null)
+                        break;
+                }   
             }
         }
 
@@ -199,7 +222,7 @@ public class GridSystem : MonoBehaviour
         public bool IsOccupied => myUnits.Count > 0;
         public Vector2Int Coord => coord;
         public List<UnitController> MyUnits => myUnits;
-        public bool IsCanMerge => myUnits.Count == 3;
+        public bool IsCanMerge => myUnits.Count == 3 && UnitGrade is Define.UnitGrade.Normal or Define.UnitGrade.Rare;
         public Define.UnitGrade UnitGrade => myUnits.Count == 0 ? Define.UnitGrade.Normal : myUnits[0].MyUnitData.Grade;
         public Define.PlayerType PlayerType => myGrid.playerType;
         #endregion
@@ -213,13 +236,13 @@ public class GridSystem : MonoBehaviour
         // 유닛이 새로 생성된 경우 큐에 추가
         public void AddUnit(UnitController unit)
         {
-            //TODO: 여기서 유닛의 포지션을 세팅해주자
             if (myUnits.Count >= 3)
             {
                 Debug.LogErrorFormat("Cell 정원 초과인데 Add시도 포착됨: {0}", unit.MyUnitData.UnitName);
             }
             myUnits.Add(unit);
             unit.MyCell = this;
+            unit.transform.parent = myGrid.transform;
             
             RegisterUnitCoordDict(unit);
             
@@ -235,6 +258,7 @@ public class GridSystem : MonoBehaviour
             foreach (var unit in units)
             {
                 unit.MyCell = this;
+                unit.transform.parent = myGrid.transform;
             }
             
             RegisterUnitCoordDict(units[0]);

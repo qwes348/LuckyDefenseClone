@@ -15,8 +15,38 @@ MonoBehaviour:
   m_GroupName: EnemyData
   m_GUID: 465e61bd70c96034c8a19d7f271577db
   m_SerializeEntries:
+  - m_GUID: 076ede79f7f821141851b232890da978
+    m_Address: Assets/04.Data/EnemyData/EnemyData-Slime3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemyData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1cb5d4a578cc3ea4f9845a45a7f25a12
+    m_Address: Assets/04.Data/EnemyData/EnemyData-SlimeBoss3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemyData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 41e14a3adb3b9c547bda5bc315b71419
+    m_Address: Data/EnemyData-SlimeBoss
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemyData
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 521b6ee08fc457041b4504ca0a235540
     m_Address: Data/EnemyData-Slime
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemyData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ccb4cb034a9abd649be2dc0b3d64e393
+    m_Address: Assets/04.Data/EnemyData/EnemyData-SlimeBoss2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemyData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f17d52542cc34294a801da8cd1046520
+    m_Address: Assets/04.Data/EnemyData/EnemyData-Slime2.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - enemyData

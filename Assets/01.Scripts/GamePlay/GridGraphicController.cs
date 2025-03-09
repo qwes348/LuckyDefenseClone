@@ -39,7 +39,6 @@ public class GridGraphicController : MonoBehaviour
 
     public void OnCellDragging(GridSystem.Cell cell)
     {
-        // TODO: 점선
         pointerDownSprite.gameObject.SetActive(true);
         draggingSprite.transform.position = cell.GetWorldPosition();
         draggingSprite.gameObject.SetActive(true);

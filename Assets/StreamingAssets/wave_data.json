@@ -2,16 +2,83 @@
     "enemyTemplates": {
       "Slime": {
         "name": "Slime",
+        "unitId" : 1001,
         "spawnInterval": 0.4
+      },
+      "SlimeBoss": {
+        "name": "SlimeBoss",
+        "unitId" : 2001,
+        "spawnInterval": 0.3
+      },
+      "Slime2": {
+        "name": "Slime2",
+        "unitId" : 1002,
+        "spawnInterval": 0.4
+      },
+      "SlimeBoss2": {
+        "name": "SlimeBoss2",
+        "unitId" : 2002,
+        "spawnInterval": 0.3
+      },
+      "Slime3": {
+        "name": "Slime3",
+        "unitId" : 1003,
+        "spawnInterval": 0.4
+      },
+      "SlimeBoss3": {
+        "name": "SlimeBoss3",
+        "unitId" : 2003,
+        "spawnInterval": 0.3
       }
     },
     "waves": [
       {
-        "__comment": "waveRange 0번~1번 까지 같은 설정으로 진행",
-        "waveRange": [1, 99],
+        "waveRange": [1, 4],
         "nextWaveTime": 20,
         "enemies": [
-          { "template": "Slime", "count": 40 }
+          { "template": "Slime", "count": 60 }
+        ]
+      },
+      {
+        "waveRange": [5, 9],
+        "nextWaveTime": 20,
+        "enemies": [
+          { "template": "Slime2", "count": 60 }
+        ]
+      },
+      {
+        "waveRange": [10, 10],
+        "nextWaveTime": 60,
+        "enemies": [
+          { "template": "SlimeBoss", "count": 2 }
+        ]
+      },
+      {
+        "waveRange": [11, 19],
+        "nextWaveTime": 20,
+        "enemies": [
+          { "template": "Slime2", "count": 60 }
+        ]
+      },
+      {
+        "waveRange": [20, 20],
+        "nextWaveTime": 60,
+        "enemies": [
+          { "template": "SlimeBoss2", "count": 2 }
+        ]
+      },
+      {
+        "waveRange": [21, 29],
+        "nextWaveTime": 20,
+        "enemies": [
+          { "template": "Slime3", "count": 60 }
+        ]
+      },
+      {
+        "waveRange": [30, 30],
+        "nextWaveTime": 60,
+        "enemies": [
+          { "template": "SlimeBoss3", "count": 2 }
         ]
       }
     ]

@@ -64,6 +64,7 @@ public class GridInputController : MonoBehaviour
                 if (cell != null && pointerDownCell != cell)
                 {
                     // TODO: 반투명 셀 그래픽 On / 셀 포인터 그래픽들은 전부 on / 공격범위 on 
+                    InGameUiManager.Instance.UnitManage.SetActive(false);
                     gridGraphic.OnCellDragging(grid.GetCell(gridPos));
                     gridGraphic.SetActiveAttackRange(true);
                 }
