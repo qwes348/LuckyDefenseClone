@@ -298,4 +298,23 @@ public class UnitSpawnManager
 
         return (from pair in mythMaterialHoldDict where pair.Value >= pair.Key.materialUnits.Count select pair.Key).FirstOrDefault();
     }
+
+    public List<MythCombineData> GetAvailableMythCombineDatas(Define.PlayerType playerType)
+    {
+        GridSystem grid = InGameManagers.FieldMgr.GetGridSystem(playerType);
+        Dictionary<MythCombineData, int> mythMaterialHoldDict = new Dictionary<MythCombineData, int>();
+        foreach (var data in mythCombineDatas)
+        {
+            foreach (var material in data.materialUnits)
+            {
+                // 진행도가 아닌 가능한 데이터를 찾는거니까 하나라도 없으면 break
+                if (!grid.IsUnitExist(allUnitDatasPool.First(u => u.UnitId == material.unitId)))
+                    break;
+                if(!mythMaterialHoldDict.TryAdd(data, 1))
+                    mythMaterialHoldDict[data]++;
+            }
+        }
+
+        return (from pair in mythMaterialHoldDict where pair.Value >= pair.Key.materialUnits.Count select pair.Key).ToList();
+    }
 }

@@ -29,6 +29,26 @@
         "name": "SlimeBoss3",
         "unitId" : 2003,
         "spawnInterval": 0.3
+      },
+      "Slime4": {
+        "name": "Slime4",
+        "unitId" : 1004,
+        "spawnInterval": 0.4
+      },
+      "SlimeBoss4": {
+        "name": "SlimeBoss4",
+        "unitId" : 2004,
+        "spawnInterval": 0.3
+      },
+      "Slime5": {
+        "name": "Slime5",
+        "unitId" : 1005,
+        "spawnInterval": 0.4
+      },
+      "SlimeBoss5": {
+        "name": "SlimeBoss5",
+        "unitId" : 2005,
+        "spawnInterval": 0.3
       }
     },
     "waves": [
@@ -57,7 +77,7 @@
         "waveRange": [11, 19],
         "nextWaveTime": 20,
         "enemies": [
-          { "template": "Slime2", "count": 60 }
+          { "template": "Slime3", "count": 60 }
         ]
       },
       {
@@ -71,7 +91,7 @@
         "waveRange": [21, 29],
         "nextWaveTime": 20,
         "enemies": [
-          { "template": "Slime3", "count": 60 }
+          { "template": "Slime4", "count": 60 }
         ]
       },
       {
@@ -79,6 +99,20 @@
         "nextWaveTime": 60,
         "enemies": [
           { "template": "SlimeBoss3", "count": 2 }
+        ]
+      },
+      {
+        "waveRange": [31, 39],
+        "nextWaveTime": 20,
+        "enemies": [
+          { "template": "Slime5", "count": 60 }
+        ]
+      },
+      {
+        "waveRange": [40, 40],
+        "nextWaveTime": 60,
+        "enemies": [
+          { "template": "SlimeBoss4", "count": 2 }
         ]
       }
     ]

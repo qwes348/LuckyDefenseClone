@@ -121,8 +121,8 @@ TextureImporter:
         width: 163
         height: 163
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 70, y: 70, z: 70, w: 70}
       customData: 
       outline: []
       physicsShape: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 18dd9f1586a5aa04cad0a705d21c31ba
     internalID: 0
     vertices: []
     indices: 
@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ButtonText_Geen_OnOffButton_0: 26688609787311656
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

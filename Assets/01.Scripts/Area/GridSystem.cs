@@ -55,7 +55,8 @@ public class GridSystem : MonoBehaviour
         Cell targetCell = null;
         
         // 같은 유닛이 배치된 셀이 있는지 확인
-        if (unitCoordDict.TryGetValue(unit.MyUnitData, out List<Cell> value))
+        // 신화등급은 겹쳐지지않음
+        if (unit.MyUnitData.Grade != Define.UnitGrade.Mythical && unitCoordDict.TryGetValue(unit.MyUnitData, out List<Cell> value))
         {
             // 같은 유닛 셀을 돌면서 겹쳐서 배치가 가능한지 확인
             foreach (var cell in value.Where(cell => cell.MyUnits.Count < 3))
@@ -113,6 +114,11 @@ public class GridSystem : MonoBehaviour
         
         targetCell.AddUnit(unit);
         unit.gameObject.SetActive(true);
+
+        if (playerType == Define.PlayerType.LocalPlayer)
+        {
+            InGameUiManager.Instance.HUD.UpdateMythCombineAvailable();
+        }
     }
 
     // 월드 포지션을 그리드 좌표로 변환 (그리드내의 유효한 좌표는 아닐 수 있음)

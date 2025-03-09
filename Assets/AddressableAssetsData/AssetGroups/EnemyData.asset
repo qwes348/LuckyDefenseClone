@@ -16,13 +16,31 @@ MonoBehaviour:
   m_GUID: 465e61bd70c96034c8a19d7f271577db
   m_SerializeEntries:
   - m_GUID: 076ede79f7f821141851b232890da978
-    m_Address: Assets/04.Data/EnemyData/EnemyData-Slime3.asset
+    m_Address: Data/EnemyData-Slime3
     m_ReadOnly: 0
     m_SerializedLabels:
     - enemyData
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1cb5d4a578cc3ea4f9845a45a7f25a12
-    m_Address: Assets/04.Data/EnemyData/EnemyData-SlimeBoss3.asset
+    m_Address: Data/EnemyData-SlimeBoss3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemyData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1dc5a29fbb13df64cb031d9fbbe13fa4
+    m_Address: Data/EnemyData-SlimeBoss4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemyData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 239a802bcc4cbf143a51df04ca990c1f
+    m_Address: Data/EnemyData-SlimeBoss5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemyData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30c8454f2913f2d4b911c125a46fcbd9
+    m_Address: Data/EnemyData-Slime5
     m_ReadOnly: 0
     m_SerializedLabels:
     - enemyData
@@ -39,14 +57,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - enemyData
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7680a69cdf45d904faf556f1921494cd
+    m_Address: Data/EnemyData-Slime4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemyData
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ccb4cb034a9abd649be2dc0b3d64e393
-    m_Address: Assets/04.Data/EnemyData/EnemyData-SlimeBoss2.asset
+    m_Address: Data/EnemyData-SlimeBoss2
     m_ReadOnly: 0
     m_SerializedLabels:
     - enemyData
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f17d52542cc34294a801da8cd1046520
-    m_Address: Assets/04.Data/EnemyData/EnemyData-Slime2.asset
+    m_Address: Data/EnemyData-Slime2
     m_ReadOnly: 0
     m_SerializedLabels:
     - enemyData

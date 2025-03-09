@@ -4,6 +4,8 @@ using UnityEngine;
 public class InGameUiManager : StaticMono<InGameUiManager>
 {
     [SerializeField]
+    private HudCanvas hud;
+    [SerializeField]
     private UnitManageCanvas unitManage;
     [SerializeField]
     private UpgradeCanvas upgrade;
@@ -17,7 +19,8 @@ public class InGameUiManager : StaticMono<InGameUiManager>
     private GameOverCanvas gameOver;
     [SerializeField]
     private GameStartCanvas gameStart;
-    
+
+    public HudCanvas HUD => hud;
     public UnitManageCanvas UnitManage => unitManage;
     public UpgradeCanvas Upgrade => upgrade;
     public GamblingCanvas Gambling => gambling;

@@ -109,6 +109,8 @@ public class InGameManagers : MonoBehaviour
         // DOTween.defaultTimeScaleIndependent = true;
         // await DOVirtual.Float(1f, 0f, 1.5f, v => Time.timeScale = v);
         InGameUiManager.Instance.GameOver.SetActiveCanvas(true);
+        fieldMgr.playerGrid.gameObject.SetActive(false);
+        fieldMgr.aiPlayerGrid.gameObject.SetActive(false);
     }
 
     public void Retry()

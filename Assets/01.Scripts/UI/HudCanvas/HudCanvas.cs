@@ -17,6 +17,8 @@ public class HudCanvas : MonoBehaviour
     private TextMeshProUGUI spawnCostText;
     [SerializeField]
     private TextMeshProUGUI bossTimerText;
+    [SerializeField]
+    private TextMeshProUGUI mythCombineAvailableText;
     
     [Header("Images")]
     [SerializeField]
@@ -29,10 +31,13 @@ public class HudCanvas : MonoBehaviour
     [Header("Objects")]
     [SerializeField]
     private GameObject bossTimerObject;
+    [SerializeField]
+    private GameObject mythCombineAvailableObject;
 
     private void Start()
     {
         SetActiveBossTimer(false);
+        mythCombineAvailableObject.SetActive(false);
         unitSpawnButton.onClick.AddListener(() => InGameManagers.UnitSpawnMgr.SpawnRandomUnit(Define.PlayerType.LocalPlayer));
         
         UpdateWaveNumberText(2);
@@ -91,5 +96,13 @@ public class HudCanvas : MonoBehaviour
     {
         int spawnCost = InGameManagers.UnitSpawnMgr.CurrentSpawnCost;
         spawnCostText.color = InGameManagers.CurrencyMgr.CoinAmount >= spawnCost ? Color.white : Color.red;
+    }
+
+    public void UpdateMythCombineAvailable()
+    {
+        var datas = InGameManagers.UnitSpawnMgr.GetAvailableMythCombineDatas(Define.PlayerType.LocalPlayer);
+        mythCombineAvailableObject.SetActive(datas != null && datas.Count > 0);
+        if(datas != null && datas.Count > 0)
+            mythCombineAvailableText.text = $"{datas.Count}";
     }
 }
