@@ -56,7 +56,7 @@ public class UnitManageCanvas : MonoBehaviour
         }
     }
     
-    public void SetActive(bool active)
+    public void SetActiveCanvas(bool active)
     {
         if (!active)
         {
@@ -78,7 +78,7 @@ public class UnitManageCanvas : MonoBehaviour
             return;
         
         InGameManagers.UnitSpawnMgr.MergeUnits(targetCell, Define.PlayerType.LocalPlayer);
-        SetActive(false);
+        SetActiveCanvas(false);
     }
 
     public void Sell()
@@ -87,7 +87,7 @@ public class UnitManageCanvas : MonoBehaviour
             return;
         
         InGameManagers.UnitSpawnMgr.SellUnit(targetCell, Define.PlayerType.LocalPlayer);
-        SetActive(false);
+        SetActiveCanvas(false);
     }
 
     public void Trash()
@@ -96,6 +96,6 @@ public class UnitManageCanvas : MonoBehaviour
             return;
         
         InGameManagers.UnitSpawnMgr.TrashUnit(targetCell, Define.PlayerType.LocalPlayer);
-        SetActive(false);
+        SetActiveCanvas(false);
     }
 }

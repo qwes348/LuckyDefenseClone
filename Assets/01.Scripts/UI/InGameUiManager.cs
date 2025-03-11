@@ -19,6 +19,8 @@ public class InGameUiManager : StaticMono<InGameUiManager>
     private GameOverCanvas gameOver;
     [SerializeField]
     private GameStartCanvas gameStart;
+    [SerializeField]
+    private DamageCanvas damage;
 
     public HudCanvas HUD => hud;
     public UnitManageCanvas UnitManage => unitManage;
@@ -28,16 +30,19 @@ public class InGameUiManager : StaticMono<InGameUiManager>
     public WaveNoticeCanvas WaveNotice => waveNotice;
     public GameOverCanvas GameOver => gameOver;
     public GameStartCanvas GameStart => gameStart;
+    public DamageCanvas Damage => damage;
 
     private void Awake()
     {
-        unitManage.SetActive(false);
+        unitManage.SetActiveCanvas(false);
         upgrade.SetActiveCanvas(false);
         gambling.SetActiveCanvas(false);
         mythCombine.SetActiveCanvas(false);
         waveNotice.SetActiveCanvas(false);
         gameOver.SetActiveCanvas(false);
         gameStart.SetActiveCanvas(true);
+        
+        damage.gameObject.SetActive(true);
     }
 
     public void OnUpgradeCanvasActivate()

@@ -105,6 +105,7 @@ public class EnemyController : MonoBehaviour
                 break;
         }
 
+        InGameUiManager.Instance.Damage.ShowDamage(transform.position, finalDamage);
         currentHelth -= finalDamage;
         onHealthChanged?.Invoke(currentHelth);
 

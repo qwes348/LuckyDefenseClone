@@ -35,7 +35,7 @@ public class GridInputController : MonoBehaviour
                 {
                     gridGraphic.SetActiveAttackRange(false);
                     pointerDownCell = null;
-                    InGameUiManager.Instance.UnitManage.SetActive(false);
+                    InGameUiManager.Instance.UnitManage.SetActiveCanvas(false);
                     return;
                 }
                 
@@ -45,7 +45,7 @@ public class GridInputController : MonoBehaviour
             {
                 gridGraphic.SetActiveAttackRange(false);
                 pointerDownCell = null;
-                InGameUiManager.Instance.UnitManage.SetActive(false);
+                InGameUiManager.Instance.UnitManage.SetActiveCanvas(false);
             }
         }
         else if (Input.GetMouseButtonDown(0) && IsPointerOverUI())
@@ -64,7 +64,7 @@ public class GridInputController : MonoBehaviour
                 if (cell != null && pointerDownCell != cell)
                 {
                     // TODO: 반투명 셀 그래픽 On / 셀 포인터 그래픽들은 전부 on / 공격범위 on 
-                    InGameUiManager.Instance.UnitManage.SetActive(false);
+                    InGameUiManager.Instance.UnitManage.SetActiveCanvas(false);
                     gridGraphic.OnCellDragging(grid.GetCell(gridPos));
                     gridGraphic.SetActiveAttackRange(true);
                 }
@@ -93,7 +93,7 @@ public class GridInputController : MonoBehaviour
                         return;
                     grid.MoveUnits(pointerDownCell, cell);
                     gridGraphic.SetActiveAttackRange(false);
-                    InGameUiManager.Instance.UnitManage.SetActive(false);
+                    InGameUiManager.Instance.UnitManage.SetActiveCanvas(false);
                 }
                 else  // 처음 클릭한 셀에서 포인터Up했을 때
                 {
@@ -101,7 +101,7 @@ public class GridInputController : MonoBehaviour
                     // TODO: 판매 합성 UI On
                     gridGraphic.SetActiveAttackRange(true);
                     InGameUiManager.Instance.UnitManage.Init(pointerDownCell);
-                    InGameUiManager.Instance.UnitManage.SetActive(true);
+                    InGameUiManager.Instance.UnitManage.SetActiveCanvas(true);
                 }
             }
             isDragging = false;

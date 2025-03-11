@@ -85,7 +85,7 @@ public class WaveManager
     {
         // 사정 정의된 wave를 넘어섰다면 제일 마지막 wave를 리턴
         // 마지막 wave데이터는 반복 웨이브로 구현됨
-        if(waveNumber >= waveData.waves.Length)
+        if(waveNumber >= waveData.waves[^2].waveRange[1])
             return waveData.waves[^1];
         
         foreach (var wv in waveData.waves)
