@@ -1,5 +1,7 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
@@ -83,6 +85,16 @@ public class UnitController : MonoBehaviour
         
         if (nearestEnemy == null)
             return;
+        Vector3 direction = (nearestEnemy.transform.position - transform.position).normalized;
+        float dotProduct = Vector3.Dot(transform.right, direction);
+        if (dotProduct > 0) // 타겟이 오른쪽에있음
+        {
+            anim.transform.rotation = Quaternion.Euler(myUnitData.IsFilpSprite ? Vector3.up * 180f : Vector3.zero);
+        }
+        else // 타겟이 왼쪽에있음
+        {
+            anim.transform.rotation = Quaternion.Euler(myUnitData.IsFilpSprite ? Vector3.zero : Vector3.up * 180f);
+        }
         
         anim.SetTrigger(animParamAttack);
 

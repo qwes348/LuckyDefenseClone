@@ -63,6 +63,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - enemyData
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3130bab8c3baee4d825c6afaa6f2d81
+    m_Address: Data/EnemyData-Repeat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - enemyData
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ccb4cb034a9abd649be2dc0b3d64e393
     m_Address: Data/EnemyData-SlimeBoss2
     m_ReadOnly: 0

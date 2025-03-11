@@ -1,3 +1,4 @@
+using EditorAttributes;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -22,6 +23,8 @@ public class UnitData : ScriptableObject
     private AnimatorOverrideController animator;
     [SerializeField]
     private Sprite thumbnailSprite;
+    [SerializeField, UnityEngine.Suffix("기본 스프라이트가 왼쪽을 바라보고있으면 true")]
+    private bool isFilpSprite;
     
     #region Properties
     public Define.UnitGrade Grade => grade;
@@ -34,5 +37,6 @@ public class UnitData : ScriptableObject
     public AssetReferenceGameObject UnitPrefab => unitPrefab;
     public AnimatorOverrideController Animator => animator;
     public Sprite ThumbnailSprite => thumbnailSprite;
+    public bool IsFilpSprite => isFilpSprite;
     #endregion
 }

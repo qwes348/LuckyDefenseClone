@@ -49,6 +49,11 @@
         "name": "SlimeBoss5",
         "unitId" : 2005,
         "spawnInterval": 0.3
+      },
+      "Repeat": {
+        "name": "Repeat",
+        "unitId" : 9999,
+        "spawnInterval": 0.3
       }
     },
     "waves": [
@@ -113,6 +118,13 @@
         "nextWaveTime": 60,
         "enemies": [
           { "template": "SlimeBoss4", "count": 2 }
+        ]
+      },
+      {
+        "waveRange": [41, 9999],
+        "nextWaveTime": 20,
+        "enemies": [
+          { "template": "Repeat", "count": 60 }
         ]
       }
     ]

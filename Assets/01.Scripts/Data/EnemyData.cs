@@ -38,4 +38,24 @@ public class EnemyData : ScriptableObject
     public AnimatorOverrideController Animator => animator;
 
     #endregion
+
+    public void AddMaxHealth(int amount)
+    {
+        if (!unitId.Equals(9999))
+        {
+            Debug.LogError($"일반 웨이브 MaxHealth 수정 감지됨: {name}, unitId: {unitId}");
+            return;
+        }
+        maxHealth += amount;
+    }
+
+    public void SetMaxHealth(int amount)
+    {
+        if (!unitId.Equals(9999))
+        {
+            Debug.LogError($"일반 웨이브 MaxHealth 수정 감지됨: {name}, unitId: {unitId}");
+            return;
+        }
+        maxHealth += amount;
+    }
 }

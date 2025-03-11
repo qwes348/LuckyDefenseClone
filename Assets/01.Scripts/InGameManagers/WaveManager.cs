@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -82,11 +83,17 @@ public class WaveManager
 
     private Wave FindWave(int waveNumber)
     {
+        // 사정 정의된 wave를 넘어섰다면 제일 마지막 wave를 리턴
+        // 마지막 wave데이터는 반복 웨이브로 구현됨
+        if(waveNumber >= waveData.waves.Length)
+            return waveData.waves[^1];
+        
         foreach (var wv in waveData.waves)
         {
             if (wv.waveRange[0] <= waveNumber && wv.waveRange[1] >= waveNumber)
                 return wv;
         }
+        
         return null;
     }
 
@@ -104,6 +111,11 @@ public class WaveManager
         {
             var template = waveData.enemyTemplates[wave.enemies[i].template];
             var data = allEnemyDatasPool.Find(ed => ed.UnitId == template.unitId);
+            if (data.UnitId.Equals(9999))   // 반복 웨이브
+            {
+                // 반복마다 체력을 200씩 증가시킴
+                data.SetMaxHealth(800 + (currentWaveNumber - wave.waveRange[0]) * 200);
+            }
             if(!isStartEventFired)
             {
                 if (data.Grade == Define.EnemyGrade.Boss)
