@@ -253,6 +253,7 @@ public class GridSystem : MonoBehaviour
             RegisterUnitCoordDict(unit);
             
             UpdateUnitsPosition();
+            myUnits.ForEach(u => u.SetActiveOutline(IsCanMerge));
         }
 
         // 한번에 여러마리의 유닛을 추가할 때
@@ -270,6 +271,7 @@ public class GridSystem : MonoBehaviour
             RegisterUnitCoordDict(units[0]);
             
             UpdateUnitsPosition();
+            myUnits.ForEach(u => u.SetActiveOutline(IsCanMerge));
         }
 
         // 나중에 같은 유닛찾을 때 쉽기위해 딕셔너리에 해당 유닛을 가진 셀로 이 셀을 등록하는 과정
@@ -302,6 +304,8 @@ public class GridSystem : MonoBehaviour
                 myGrid.unitCoordDict[unit.MyUnitData].Remove(this);
             else
                 UpdateUnitsPosition();
+            
+            myUnits.ForEach(u => u.SetActiveOutline(IsCanMerge));
             return unit;
         }
 
@@ -313,6 +317,8 @@ public class GridSystem : MonoBehaviour
             {
                 unit.MyCell = null;
             }
+            
+            myUnits.ForEach(u => u.SetActiveOutline(false));
             myUnits.Clear();
         }
 

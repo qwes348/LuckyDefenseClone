@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 public class UnitController : MonoBehaviour
 {
+    private static readonly int OutlineThickness = Shader.PropertyToID("_OutlineThickness");
     [SerializeField]
     private UnitData myUnitData;
     [SerializeField]
@@ -17,6 +18,7 @@ public class UnitController : MonoBehaviour
     private Animator anim;
     private GridSystem.Cell myCell;
     private bool isSelected;
+    private Material spriteMaterial;
     
     #region AnimParam
 
@@ -41,6 +43,7 @@ public class UnitController : MonoBehaviour
         gameObject.name = data.UnitName;
         foothold.color = Define.UnitFootholdColorDict[myUnitData.Grade];
         anim.transform.localScale = data.Grade == Define.UnitGrade.Mythical ? Vector3.one * 2f : Vector3.one * 1.5f;    // 신화등급은 크게
+        spriteMaterial = anim.GetComponent<SpriteRenderer>().material;
 
         await UniTask.Yield();
         anim.SetFloat(animParamAttackSpeed, 1f / data.AttackSpeed);
@@ -141,5 +144,10 @@ public class UnitController : MonoBehaviour
         }
         
         return myUnitData.AttackPower + (myUnitData.AttackPower * 0.5f * upgradeLevel);
+    }
+
+    public void SetActiveOutline(bool active)
+    {
+        spriteMaterial.SetFloat(OutlineThickness, active ? 1f : 0f);
     }
 }
