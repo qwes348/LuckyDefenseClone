@@ -202,7 +202,8 @@ public class GridSystem : MonoBehaviour
                 {
                     Gizmos.color = Color.blue;
                 }
-                Gizmos.DrawWireCube(new Vector3(x, y, 0) * CellSize, Vector3.one * CellSize);
+                Vector3 coord = new Vector3(x, y, 0);
+                Gizmos.DrawWireCube(coord * CellSize + coord * 0.01f, Vector3.one * CellSize);
             }
         }
     }

@@ -39,7 +39,6 @@ public class UnitController : MonoBehaviour
         if(anim == null)
             anim = GetComponentInChildren<Animator>();
         anim.runtimeAnimatorController = data.Animator;
-        // Debug.LogErrorFormat("data: {0}, anim: {1}", data.AttackSpeed, anim.GetFloat("AttackSpeed"));
         gameObject.name = data.UnitName;
         foothold.color = Define.UnitFootholdColorDict[myUnitData.Grade];
         anim.transform.localScale = data.Grade == Define.UnitGrade.Mythical ? Vector3.one * 2f : Vector3.one * 1.5f;    // 신화등급은 크게

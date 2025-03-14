@@ -19865,7 +19865,7 @@ Tilemap:
       - {fileID: 435767012, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
       - {fileID: 1597646553, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
       - {fileID: 1670310931, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -12, y: -11, z: 0}
@@ -19880,7 +19880,7 @@ Tilemap:
       - {fileID: 435767012, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
       - {fileID: 1597646553, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
       - {fileID: 1670310931, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 11, y: -11, z: 0}
@@ -20180,7 +20180,7 @@ Tilemap:
       - {fileID: 435767012, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
       - {fileID: 1597646553, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
       - {fileID: 1670310931, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 11, y: -1, z: 0}
@@ -20810,7 +20810,7 @@ Tilemap:
       - {fileID: 435767012, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
       - {fileID: 1597646553, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
       - {fileID: 1670310931, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: 12, z: 0}
@@ -20855,7 +20855,7 @@ Tilemap:
       - {fileID: 435767012, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
       - {fileID: 1597646553, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
       - {fileID: 1670310931, guid: 9419c52dd10c9c14b96e6d639ea39a58, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 8, y: 12, z: 0}
